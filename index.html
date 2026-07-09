@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lin Wei — Relational Threshold Urbanism</title>
+<meta name="description" content="Research landing page: computational architecture, open geospatial data, threshold affordance, and relational holding in dense urban environments.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+  :root{
+    --ink:#0c1116;
+    --paper:#ffffff;
+    --steel:#133a52;
+    --steel-2:#1f5e7a;
+    --acid:#27e0c4;
+    --signal:#0a84ff;
+    --dim:#5e6a72;
+    --hair:#d3dde2;
+    --mist:#e2f6f2;
+    --wash:#f4f9f8;
+    --amber:#e8c88a;
+    --red:#b0332a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--acid);color:var(--ink)}
+  a{color:inherit}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase}
+  .boxlabel{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;border:1.5px solid var(--ink);padding:6px 11px}
+  .blacktab{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:6px 12px}
+
+  /* COVER */
+  .cover{position:relative;background:radial-gradient(120% 80% at 50% 35%, #1f5e7a 0%, #133a52 50%, #081f2d 100%);color:#fff;min-height:94vh;display:flex;flex-direction:column;padding:30px 34px 54px;overflow:hidden}
+  .cover::before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 28% 34%,rgba(39,224,196,.18),transparent 23%),radial-gradient(circle at 72% 62%,rgba(10,132,255,.14),transparent 28%);filter:blur(1px)}
+  .cover::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 100% at 50% 28%,transparent 55%,rgba(0,0,0,.5) 100%);mix-blend-mode:multiply}
+  .cover-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:2}
+  .cover-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(34px,7vw,92px);line-height:.84;letter-spacing:-.02em;text-transform:uppercase}
+  .plus-list{text-align:right;font-family:'IBM Plex Mono',monospace}
+  .plus-list .p{font-size:13px;letter-spacing:.2em;margin-bottom:10px;opacity:.9}
+  .plus-list .pi{font-size:11px;letter-spacing:.3em;line-height:2.1;font-weight:500}
+  .plus-list .pi span{display:block}
+  .cover-note{position:relative;z-index:2;margin-top:38px;max-width:250px;border-left:1px dashed rgba(255,255,255,.6);padding-left:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;line-height:1.75;color:#d7e8e5;text-transform:uppercase}
+  .cover-note b{color:#fff;font-weight:600}
+  .cover-title{position:relative;z-index:2;text-align:center;margin:auto 0;padding:42px 0 10px}
+  .ct-the{font-family:'IBM Plex Mono',monospace;letter-spacing:.5em;font-size:13px;display:block;margin-bottom:16px;opacity:.85}
+  .ct-line1{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(38px,8.4vw,104px);line-height:.95;display:flex;justify-content:center;align-items:baseline;gap:.12em;flex-wrap:wrap}
+  .ct-line1 .brk{font-weight:400}.ct-line1 .it{font-style:italic}
+  .ct-line2{font-family:'IBM Plex Mono',monospace;letter-spacing:.34em;font-size:clamp(12px,2.1vw,19px);margin-top:16px;text-transform:uppercase}
+  .ct-line2 em{font-family:'Playfair Display',serif;font-style:italic;text-transform:none;letter-spacing:0;font-size:1.15em}
+  .ct-rule{display:flex;align-items:center;justify-content:center;gap:14px;margin:18px 0 10px}.ct-rule .ln{height:1px;width:120px;background:rgba(255,255,255,.7)}.ct-rule .pl{color:var(--acid)}
+  .ct-line3{font-family:'Playfair Display',serif;font-size:clamp(24px,4.6vw,52px);font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+  .ct-line3 .yr{font-family:'IBM Plex Mono',monospace;font-size:.28em;letter-spacing:.1em;vertical-align:super;margin-left:.4em}
+  .ct-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(15px,2.2vw,20px);margin-top:16px;line-height:1.35;opacity:.95;max-width:760px;margin-left:auto;margin-right:auto}
+  .scrollcue{position:relative;z-index:2;text-align:center;margin-top:34px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;opacity:.75}
+  .scrollcue .tri{display:block;margin-top:8px;animation:bob 2s ease-in-out infinite}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+  .runhead{border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:13px 34px;position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);z-index:40}
+  .runhead .l{display:flex;align-items:center}.runhead .r{display:flex;gap:18px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:11.5px}.runhead .r a{text-decoration:none;letter-spacing:.06em;border-bottom:1px solid var(--hair)}.runhead .r a:hover{border-bottom-color:var(--signal);color:var(--signal)}
+
+  .opener{padding:54px 34px 30px;max-width:1180px;margin:0 auto}.opener .fromeditor{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}.opener .credit{font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.6;margin-bottom:18px}.opener .credit em{font-style:italic}
+  h1.headline{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(46px,9.6vw,124px);line-height:.88;letter-spacing:-.01em;text-transform:uppercase;display:inline;background:linear-gradient(transparent 62%, var(--mist) 62%, var(--mist) 94%, transparent 94%);padding:0 .08em}.headline .it{font-style:italic;text-transform:none;font-weight:400}
+  .standfirst{font-size:clamp(19px,2.3vw,26px);line-height:1.42;max-width:840px;margin:38px 0 6px}.standfirst b{font-weight:600}
+
+  .article{padding:30px 34px 20px;max-width:1180px;margin:0 auto}.cols{columns:2;column-gap:46px;column-rule:1px solid var(--hair);text-align:justify;hyphens:auto}.cols p{margin:0 0 14px;font-size:16px;line-height:1.52}.cols p.first{text-align:left}.cols .lead{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}.cols .lead.r{color:var(--signal)}.dropcap::first-letter{font-family:'Playfair Display',serif;font-weight:900;font-size:72px;float:left;line-height:.66;padding:8px 10px 0 0;color:var(--signal)}.cols strong{font-weight:600}.term{border-bottom:1.5px dotted var(--signal);font-weight:600}
+
+  .secdiv{display:flex;align-items:center;gap:18px;max-width:1180px;margin:64px auto 8px;padding:0 34px}.secdiv .pl{font-family:'IBM Plex Mono',monospace;color:var(--signal);font-size:18px}.secdiv .ln{height:2px;background:var(--ink);flex:1}.secnum{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(30px,5vw,56px);line-height:1;letter-spacing:-.01em;max-width:1180px;margin:14px auto 8px;padding:0 34px}h2 .it{font-style:italic}.sec-intro{max-width:740px;margin:18px auto 0;padding:0 34px;font-size:18px;line-height:1.55}
+
+  .tier-wrap{max-width:1180px;margin:50px auto 18px;padding:0 34px}.tier{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:var(--ink);border:1.5px solid var(--ink)}.tier-card{background:#fff;min-height:220px;padding:24px 22px;display:flex;flex-direction:column;position:relative;overflow:hidden}.tier-card::after{content:attr(data-no);position:absolute;right:12px;bottom:-18px;font-family:'Playfair Display',serif;font-size:92px;line-height:1;color:rgba(19,58,82,.09);font-style:italic}.tier-card.hot{background:#eaf6f3}.tier-card.dark{background:#0f3043;color:#fff}.tier-card .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:16px}.tier-card.dark .k{color:var(--acid)}.tier-card h3{font-family:'Playfair Display',serif;font-weight:500;font-size:26px;line-height:1.04;margin-bottom:12px}.tier-card p{font-size:14.5px;line-height:1.45;color:#344}.tier-card.dark p{color:#cfe6e0}.tier-card .q{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.55;color:var(--dim);margin-top:auto;padding-top:18px;text-transform:uppercase}.tier-card.dark .q{color:#9fc0b9}
+
+  .specimen{background:var(--acid);margin:60px 0;overflow:hidden}.specimen-inner{max-width:1180px;margin:0 auto;padding:46px 34px;display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}.spec-list{font-family:'Playfair Display',serif;font-weight:500;line-height:1.08;text-transform:uppercase}.spec-list span{display:block;font-size:clamp(19px,2.8vw,31px)}.spec-right{position:relative;display:flex;align-items:center;justify-content:flex-end}.spec-bignum{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(120px,22vw,280px);line-height:.78;letter-spacing:-.04em}.spec-bignum .pct{font-size:.32em;vertical-align:super}.spec-cap{grid-column:1/-1;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;line-height:1.7;border-top:1.5px solid var(--ink);padding-top:16px;margin-top:8px;text-transform:uppercase}.spec-cap b{font-weight:600}
+
+  figure{margin:54px auto;max-width:1180px;padding:0 34px}figure.narrow{max-width:860px}.diag{border:2px solid var(--ink);background:#fff}.diag.dark{background:var(--ink)}.diag svg{display:block;width:100%;height:auto}figcaption{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);padding:13px 4px 0;line-height:1.6;text-transform:uppercase}figcaption b{color:var(--ink);font-weight:600}
+
+  .pull{max-width:920px;margin:64px auto;padding:0 34px;text-align:center}.pull q{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3.9vw,42px);line-height:1.18;quotes:none}.pull .by{display:block;margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--signal)}
+
+  .matrix-wrap{max-width:1180px;margin:54px auto 0;padding:0 34px;overflow-x:auto}table.matrix{width:100%;border-collapse:collapse;min-width:620px;font-size:14.5px}table.matrix th,table.matrix td{text-align:left;padding:15px 14px;vertical-align:top;border-bottom:1px solid var(--hair)}table.matrix thead th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--ink);border-bottom:none}table.matrix thead th.hot{background:var(--steel)}table.matrix tbody th{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);font-weight:500;width:190px}table.matrix td b{font-weight:600}table.matrix .hot-col{background:#e6f4f1}.matrix-note{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);max-width:1180px;margin:10px auto 0;padding:0 34px;line-height:1.7;text-transform:uppercase}
+
+  .pilot-grid{max-width:1180px;margin:42px auto 0;padding:0 34px;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--ink);border:1.5px solid var(--ink)}.pilot{background:#fff;padding:28px 28px 25px;display:flex;flex-direction:column;min-height:300px}.pilot:nth-child(2){background:#eaf6f3}.pilot:nth-child(3){background:#0f3043;color:#fff}.pilot .pno{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--signal);letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px}.pilot:nth-child(3) .pno{color:var(--acid)}.pilot .pt{font-family:'Playfair Display',serif;font-size:28px;font-weight:500;line-height:1.04;margin-bottom:12px}.pilot .pd{font-size:14.5px;line-height:1.48;color:#344;margin-bottom:18px}.pilot:nth-child(3) .pd{color:#cfe6e0}.pilot .metric{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.65;color:var(--dim);border-top:1px solid var(--hair);padding-top:14px;margin-top:auto;text-transform:uppercase}.pilot:nth-child(3) .metric{color:#9fc0b9;border-top-color:rgba(255,255,255,.18)}.pilot a{font-family:'IBM Plex Mono',monospace;font-size:12px;text-decoration:none;border:1px solid var(--hair);padding:9px 12px;margin-top:14px;display:flex;justify-content:space-between}.pilot a:hover{background:var(--acid);border-color:var(--acid);color:var(--ink)}
+
+  .eqplate{position:relative;max-width:1180px;margin:54px auto;padding:38px 40px 30px;background:var(--ink);border:2px solid var(--ink);color:#fff}.eqplate .tick{position:absolute;width:14px;height:14px;border:2px solid var(--acid)}.eqplate .tick.tl{top:14px;left:14px;border-right:none;border-bottom:none}.eqplate .tick.tr{top:14px;right:14px;border-left:none;border-bottom:none}.eqplate .tick.bl{bottom:14px;left:14px;border-right:none;border-top:none}.eqplate .tick.br{bottom:14px;right:14px;border-left:none;border-top:none}.eqplate .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--acid);color:var(--acid);padding:5px 10px;margin-bottom:22px}.eqmain{text-align:center;font-size:clamp(17px,2.4vw,26px);margin:22px 0 26px;color:#fff}.eqmain .katex{color:#fff}.eqplate .howread{border-top:1px solid var(--signal);padding-top:14px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.02em;color:#bcd3cd;line-height:1.7}.side-note{max-width:1180px;margin:12px auto 0;padding:0 34px}.side-note p{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;line-height:1.7;color:var(--dim);border-left:2px solid var(--acid);padding-left:14px;text-transform:uppercase}
+
+  .quad-wrap{max-width:1180px;margin:44px auto 0;padding:0 34px;overflow-x:auto}.quad{display:grid;grid-template-columns:170px 1fr 1fr;border:1.5px solid var(--ink);min-width:640px}.quad div{padding:16px 18px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);font-size:14px}.quad div:nth-child(3n){border-right:none}.quad .qhead{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ink)}.quad .qaxis{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);background:#f4f7f8}.quad .qhot{background:#eaf6f3}.quad .qcool{background:#f6f9fa}.quad .last{border-bottom:none}.quad b{display:block;font-family:'Playfair Display',serif;font-size:15px;font-weight:600;margin-bottom:4px}
+
+  .traj-wrap{max-width:1180px;margin:34px auto 10px;padding:0 34px}.traj{list-style:none}.traj li{display:grid;grid-template-columns:1fr auto;gap:4px 18px;padding:16px 0;border-bottom:1px solid var(--hair)}.traj li:first-child{border-top:2px solid var(--ink)}.traj .what{font-size:16.5px}.traj .what a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair)}.traj .what a:hover{color:var(--signal);border-bottom-color:var(--signal)}.traj .skills{grid-column:1;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}.traj .date{grid-column:2;grid-row:1 / span 2;align-self:start;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--dim);white-space:nowrap}
+
+  .downloads{background:radial-gradient(120% 90% at 50% 0%, #1f5e7a 0%, #133a52 55%, #081f2d 100%);color:#fff;padding:74px 34px;margin-top:64px}.downloads-inner{max-width:1180px;margin:0 auto}.dl-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--acid);margin-bottom:14px}.dl-head{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(32px,5.5vw,62px);line-height:.96;margin-bottom:14px}.dl-head .it{font-style:italic}.dl-sub{font-size:17px;color:#cfe6e0;max-width:68ch;margin-bottom:44px;line-height:1.5}.papers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5px;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.16)}.paper{background:#0f3043;padding:28px 30px 26px;display:flex;flex-direction:column}.paper .pno{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--acid);letter-spacing:.12em;margin-bottom:14px}.paper .pt{font-family:'Playfair Display',serif;font-size:21px;font-weight:500;line-height:1.14;margin-bottom:10px}.paper .pd{font-size:13.5px;color:#bcd3cd;line-height:1.5;margin-bottom:18px;flex:1}.paper a{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.3);padding:9px 13px;display:flex;justify-content:space-between;transition:all .16s ease;margin-top:6px}.paper a:hover{background:var(--acid);border-color:var(--acid);color:var(--ink)}.dl-foot{margin-top:36px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9fc0b9;line-height:1.75;max-width:82ch}
+
+  footer{padding:46px 34px;border-top:2px solid var(--ink);text-align:center}footer .fm{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);line-height:2}footer a{color:var(--dim)}footer a:hover{color:var(--signal)}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}.reveal.in{opacity:1;transform:none}@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.scrollcue .tri{animation:none}}
+  @media(max-width:860px){.tier{grid-template-columns:1fr 1fr}.pilot-grid{grid-template-columns:1fr}.papers{grid-template-columns:1fr}.cols{columns:1}.specimen-inner{grid-template-columns:1fr;gap:18px}.spec-right{justify-content:center}.plus-list{display:none}.runhead{align-items:flex-start;gap:10px}.runhead .r{flex-wrap:wrap;justify-content:flex-end}h2,.sec-intro,.secdiv,.matrix-note{padding-left:22px;padding-right:22px}.traj li{grid-template-columns:1fr}.traj .date{grid-column:1;grid-row:auto}}
+  @media(max-width:560px){.tier{grid-template-columns:1fr}.cover{padding-left:22px;padding-right:22px}.cover-note{display:none}.ct-line2{letter-spacing:.18em}.runhead{display:block}.runhead .r{margin-top:10px;justify-content:flex-start}.quad{grid-template-columns:1fr}.quad div{border-right:none}.quad .qcorner{display:none}}
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="cover-top">
+    <div class="cover-logo">Relational<br>Thresholds</div>
+    <div class="plus-list">
+      <div class="p">&#10216;(P)LUS&#10217;</div>
+      <div class="pi"><span>OPEN&nbsp;DATA</span><span>SVI&nbsp;GAPS</span><span>AFFORDANCE</span><span>GRAPH&nbsp;FIELDS</span><span>HOLDING</span></div>
+    </div>
+  </div>
+  <div class="cover-note"><b>Working intuition:</b><br>spatial contagion<br>formal method:<br>threshold transmissibility</div>
+  <div class="cover-title">
+    <span class="ct-the">A PRACTITIONER-RESEARCHER PORTFOLIO</span>
+    <div class="ct-line1"><span class="brk">[</span><span>Where the City</span>&nbsp;<span class="it">Learns</span>&nbsp;<span>to Hold</span><span class="brk">]</span></div>
+    <div class="ct-line2">( <em>Computational</em> ) &nbsp;ARCHITECTURE&nbsp;+&nbsp;REGENERATIVE&nbsp;URBANISM</div>
+    <div class="ct-rule"><span class="ln"></span><span class="pl mono">+</span><span class="ln"></span></div>
+    <div class="ct-line3">LIN&nbsp;WEI&nbsp;&middot;&nbsp;SINGAPORE<span class="yr mono">2026</span></div>
+    <div class="ct-sub">Open geospatial methods for locating the spatial preconditions of lingering, co-presence, and relational holding in dense urban environments</div>
+  </div>
+  <div class="scrollcue">Read the research brief<span class="tri">&#9660;</span></div>
+</section>
+
+<div class="runhead">
+  <div class="l"><span class="blacktab">Lin Wei</span><span class="boxlabel" style="border-left:none">Research Landing Page</span></div>
+  <div class="r">
+    <a href="#intent">Intent</a>
+    <a href="#direction">Direction</a>
+    <a href="#pilots">Pilots</a>
+    <a href="#next">Next Steps</a>
+    <a href="#documents">Repositories</a>
+    <a href="mailto:lin.wei@uniteddesignpractice.com">Email</a>
+  </div>
+</div>
+
+<div class="opener" id="intent">
+  <div class="fromeditor">From the research desk</div>
+  <div class="credit">Prepared as a PhD research landing page &mdash;<br><em>for computational architecture, urban analytics, design research, and regenerative urbanism audiences</em></div>
+  <h1 class="headline">From Data Gaps<br><span class="it">to Human Holding</span></h1>
+  <p class="standfirst reveal">Lin Wei's research asks how computational architecture can help identify the everyday threshold spaces that support human relational life: sheltered walkways, void decks, playground edges, hawker rims, lift lobbies, and estate interiors. <b>The work does not use data to prove human connection directly.</b> It uses data to locate where deeper human inquiry should begin.</p>
+</div>
+
+<div class="article">
+  <div class="cols reveal">
+    <p class="first lead">The human concern</p>
+    <p class="first dropcap">The research begins from a regenerative urbanist concern: cities should not only optimise movement, density, comfort, or resource flows. They should also renew the everyday conditions for co-presence, weak-tie recognition, informal care, intergenerational overlap, and low-pressure belonging. These conditions often appear in ordinary semi-public thresholds rather than iconic civic spaces.</p>
+    <p class="lead r">The data problem</p>
+    <p>Many dominant urban-analytics methods depend on road-based visibility: street-view imagery, road-facing sensing, formal amenities, and mapped public-space categories. Yet in tropical high-density cities, much social life is interiorised, sheltered, and pedestrian-scaled. The research therefore asks what kinds of relational urban environments become under-seen when the city is modelled from the road.</p>
+    <p class="lead">The methodological stance</p>
+    <p>The open-data pilots are not presented as final evidence of lived experience. They are presented as <span class="term">attention-directing instruments</span>: reproducible ways to detect where spatial capacity, data invisibility, and later human observation may productively meet. The aim is to move from measurable spatial preconditions toward fieldwork, situated accounts, and design implications.</p>
+    <p class="lead r">The research arc</p>
+    <p>The work therefore proceeds in tiers: first, detect what urban data can and cannot see; second, identify where lingering-supportive affordances are present; third, model whether those affordances form connected fields; fourth, validate whether those fields correspond to observed and reported relational holding.</p>
+  </div>
+</div>
+
+<div class="tier-wrap reveal">
+  <div class="tier">
+    <div class="tier-card" data-no="01">
+      <div class="k">Tier 01</div>
+      <h3>Data visibility</h3>
+      <p>Which pedestrian threshold spaces are visible or invisible to road-based urban sensing?</p>
+      <div class="q">Output: SVI visibility audit</div>
+    </div>
+    <div class="tier-card hot" data-no="02">
+      <div class="k">Tier 02</div>
+      <h3>Threshold affordance</h3>
+      <p>Which spaces are materially equipped for pausing, waiting, sitting, eating, playing, or gathering?</p>
+      <div class="q">Output: affordance capacity map</div>
+    </div>
+    <div class="tier-card dark" data-no="03">
+      <div class="k">Tier 03</div>
+      <h3>Threshold transmissibility</h3>
+      <p>Do local affordances remain isolated, or do they form connected fields across the pedestrian network?</p>
+      <div class="q">Output: graph-diffused affordance fields</div>
+    </div>
+    <div class="tier-card" data-no="04">
+      <div class="k">Tier 04</div>
+      <h3>Relational holding</h3>
+      <p>Do candidate fields actually hold people through lingering, co-presence, care, recognition, or repeated encounter?</p>
+      <div class="q">Output: mixed-method validation</div>
+    </div>
+  </div>
+</div>
+
+<figure class="reveal">
+  <div class="diag dark">
+    <svg viewBox="0 0 980 250" role="img" aria-label="Tiered research intent from data visibility to relational holding">
+      <rect width="980" height="250" fill="#0c1116"/>
+      <defs>
+        <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M2,2 L10,6 L2,10 z" fill="#27e0c4" /></marker>
+      </defs>
+      <g font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">
+        <rect x="30" y="62" width="200" height="96" rx="4" fill="none" stroke="#27e0c4" stroke-width="1.5"/>
+        <text x="130" y="96" text-anchor="middle" fill="#fff" font-family="Playfair Display, serif" font-size="20">Visibility</text>
+        <text x="130" y="122" text-anchor="middle" fill="#a9bec6">what data sees</text>
+        <line x1="230" y1="110" x2="270" y2="110" stroke="#27e0c4" stroke-width="2" marker-end="url(#arrow)"/>
+        <rect x="270" y="62" width="200" height="96" rx="4" fill="none" stroke="#0a84ff" stroke-width="1.5"/>
+        <text x="370" y="96" text-anchor="middle" fill="#fff" font-family="Playfair Display, serif" font-size="20">Affordance</text>
+        <text x="370" y="122" text-anchor="middle" fill="#a9bec6">what space enables</text>
+        <line x1="470" y1="110" x2="510" y2="110" stroke="#27e0c4" stroke-width="2" marker-end="url(#arrow)"/>
+        <rect x="510" y="62" width="200" height="96" rx="4" fill="#133a52" stroke="#27e0c4" stroke-width="1.5"/>
+        <text x="610" y="96" text-anchor="middle" fill="#fff" font-family="Playfair Display, serif" font-size="20">Transmissibility</text>
+        <text x="610" y="122" text-anchor="middle" fill="#cfe6e0">what connects</text>
+        <line x1="710" y1="110" x2="750" y2="110" stroke="#27e0c4" stroke-width="2" marker-end="url(#arrow)"/>
+        <rect x="750" y="62" width="200" height="96" rx="4" fill="none" stroke="#27e0c4" stroke-width="1.5"/>
+        <text x="850" y="96" text-anchor="middle" fill="#fff" font-family="Playfair Display, serif" font-size="20">Holding</text>
+        <text x="850" y="122" text-anchor="middle" fill="#a9bec6">what people live</text>
+        <text x="490" y="210" text-anchor="middle" fill="#7f8b93">INTENT → RESEARCH DIRECTION → OPEN-DATA PILOTS → MIXED-METHOD VALIDATION</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption><b>Fig. 01 &mdash; The landing page should make the tiers visible immediately.</b> The pilots are not isolated demos; they are sequential evidence for a larger research direction.</figcaption>
+</figure>
+
+<section class="specimen reveal">
+  <div class="specimen-inner">
+    <div class="spec-list">
+      <span>Open data cannot prove</span>
+      <span>where relationships happen.</span>
+      <span>It can identify where</span>
+      <span>their spatial preconditions</span>
+      <span>concentrate, connect,</span>
+      <span>and disappear from view.</span>
+    </div>
+    <div class="spec-right"><div class="spec-bignum">04</div></div>
+    <div class="spec-cap"><b>Four-tier research logic.</b> Data visibility → threshold affordance → graph transmissibility → relational holding. Each tier has a different evidentiary burden.</div>
+  </div>
+</section>
+
+<div class="secdiv" id="direction"><span class="secnum">Section 02</span><span class="ln"></span><span class="pl">+</span></div>
+<h2>Research Direction: From <span class="it">Affordance</span> to Field</h2>
+<p class="sec-intro">The strongest direction is not to abandon threshold affordance for transmissibility. It is to show their dependency. Threshold affordance is the local condition. Threshold transmissibility is the networked condition. Relational holding is the human condition that later fieldwork must test.</p>
+
+<div class="matrix-wrap reveal">
+  <table class="matrix">
+    <thead>
+      <tr><th>Layer</th><th class="hot">What it can claim</th><th>What it must not overclaim</th></tr>
+    </thead>
+    <tbody>
+      <tr><th>Threshold affordance</th><td class="hot-col"><b>Spatial capacity.</b> A segment is near infrastructure that materially supports lingering.</td><td>It cannot prove anyone actually lingers there.</td></tr>
+      <tr><th>Threshold transmissibility</th><td class="hot-col"><b>Networked capacity.</b> Affordance potential may propagate through connected covered pedestrian spaces.</td><td>It cannot prove trust, care, or social comfort spreads.</td></tr>
+      <tr><th>Relational holding</th><td class="hot-col"><b>Human meaning.</b> A space may support co-presence, recognition, accompaniment, and low-stakes encounter.</td><td>It must be validated through observation and situated accounts.</td></tr>
+      <tr><th>Regenerative urbanism</th><td class="hot-col"><b>Design implication.</b> Cities regenerate social tissue through repeated everyday holding conditions.</td><td>It should not become a vague positive label detached from evidence.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="eqplate reveal">
+  <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+  <span class="tag">Plate 01 &middot; graph-diffused affordance exposure</span>
+  <div class="eqmain">$$X_i^{(k+1)} = (1-\textcolor{#27e0c4}{\rho})\,\textcolor{#89c7ff}{A_i} \;+\; \textcolor{#27e0c4}{\rho} \sum_j W_{ij}\,\textcolor{#89c7ff}{X_j^{(k)}}$$</div>
+  <div class="howread"><b>How to read it:</b> each threshold segment begins with its own local affordance score A. Part of that value remains local; part diffuses through connected neighbouring segments. ρ is the transmissibility parameter. W is the graph connection strength. The output is not a human-experience score; it is a map of where affordance potential becomes spatially networked.</div>
+</div>
+<div class="side-note reveal"><p>Margin note: “spatial contagion” remains a useful private shorthand, lightly inspired by Erdős and the mathematics of connectivity. The formal research language is threshold transmissibility, graph-diffused affordance exposure, and relational affordance fields.</p></div>
+
+<figure class="reveal">
+  <div class="diag dark">
+    <svg viewBox="0 0 900 400" role="img" aria-label="Graph model of connected threshold affordance fields">
+      <rect width="900" height="400" fill="#0c1116"/>
+      <line x1="203.7" y1="105.1" x2="282.4" y2="96.4" stroke="#27e0c4" stroke-width="5" opacity=".82"/>
+      <line x1="395.7" y1="106.1" x2="501.9" y2="136.7" stroke="#27e0c4" stroke-width="3.5" opacity=".65"/>
+      <line x1="593.7" y1="135.4" x2="695.7" y2="102.9" stroke="#27e0c4" stroke-width="2" opacity=".35"/>
+      <line x1="361.1" y1="144.0" x2="396.4" y2="234.7" stroke="#0a84ff" stroke-width="4" opacity=".72"/>
+      <line x1="469.9" y1="288.3" x2="620.1" y2="297.4" stroke="#0a84ff" stroke-width="3" opacity=".52"/>
+      <line x1="175.8" y1="151.1" x2="215.6" y2="254.7" stroke="#5e6a72" stroke-width="2" opacity=".5"/>
+      <line x1="270.0" y1="290.5" x2="362.0" y2="287.0" stroke="#5e6a72" stroke-width="2" opacity=".5"/>
+      <line x1="577.0" y1="188.2" x2="636.6" y2="266.6" stroke="#27e0c4" stroke-width="2" opacity=".4"/>
+      <circle cx="160" cy="110" r="44" fill="none" stroke="#27e0c4" stroke-width="1.5"/>
+      <circle cx="340" cy="90" r="58" fill="#133a52" stroke="#27e0c4" stroke-width="1.5"/>
+      <circle cx="548" cy="150" r="48" fill="none" stroke="#0a84ff" stroke-width="1.5"/>
+      <circle cx="730" cy="92" r="36" fill="none" stroke="#5e6a72" stroke-width="1.5"/>
+      <circle cx="230" cy="292" r="40" fill="none" stroke="#5e6a72" stroke-width="1.5"/>
+      <circle cx="416" cy="285" r="54" fill="#0f3043" stroke="#0a84ff" stroke-width="1.5"/>
+      <circle cx="662" cy="300" r="42" fill="none" stroke="#27e0c4" stroke-width="1.5"/>
+      <text x="160" y="106" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="#cfe6e0">VOID</text>
+      <text x="160" y="119" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="#cfe6e0">DECK</text>
+      <text x="340" y="96" text-anchor="middle" font-size="13" font-family="IBM Plex Mono, monospace" fill="#cfe6e0">PLAY</text>
+      <text x="548" y="156" text-anchor="middle" font-size="13" font-family="IBM Plex Mono, monospace" fill="#cfe6e0">SEAT</text>
+      <text x="730" y="89" text-anchor="middle" font-size="10" font-family="IBM Plex Mono, monospace" fill="#a9bec6">MRT</text>
+      <text x="730" y="101" text-anchor="middle" font-size="10" font-family="IBM Plex Mono, monospace" fill="#a9bec6">EXIT</text>
+      <text x="230" y="289" text-anchor="middle" font-size="10" font-family="IBM Plex Mono, monospace" fill="#a9bec6">LIFT</text>
+      <text x="230" y="301" text-anchor="middle" font-size="10" font-family="IBM Plex Mono, monospace" fill="#a9bec6">LOBBY</text>
+      <text x="416" y="292" text-anchor="middle" font-size="13" font-family="IBM Plex Mono, monospace" fill="#cfe6e0">SHELTER</text>
+      <text x="662" y="297" text-anchor="middle" font-size="10.5" font-family="IBM Plex Mono, monospace" fill="#cfe6e0">BUS</text>
+      <text x="662" y="309" text-anchor="middle" font-size="10.5" font-family="IBM Plex Mono, monospace" fill="#cfe6e0">STOP</text>
+      <text x="450" y="365" text-anchor="middle" font-size="12" font-family="IBM Plex Mono, monospace" fill="#7f8b93">NODE SIZE = AFFORDANCE EXPOSURE · EDGE WIDTH = CONNECTION STRENGTH · FIELD = GRAPH-DIFFUSED CAPACITY</text>
+    </svg>
+  </div>
+  <figcaption><b>Fig. 02 &mdash; Computational architecture as graph thinking.</b> The research treats thresholds as connected fields rather than isolated amenities.</figcaption>
+</figure>
+
+<div class="secdiv" id="pilots"><span class="secnum">Section 03</span><span class="ln"></span><span class="pl">+</span></div>
+<h2>Open-Data Pilots as <span class="it">Evidence</span></h2>
+<p class="sec-intro">The landing page should make the pilots readable without requiring the visitor to open a notebook. Each card states the question, the method, the current finding, and the larger role it plays in the research arc.</p>
+
+<div class="pilot-grid reveal">
+  <div class="pilot">
+    <div class="pno">Pilot 01 · Visibility</div>
+    <div class="pt">Seeing the Covered City</div>
+    <div class="pd">Singapore's covered pedestrian network is cross-referenced against drivable-road proximity to estimate which segments are plausibly visible or invisible to road-based street-view imagery.</div>
+    <div class="metric"><b>Current result:</b><br>26.5% of the covered network — approximately 1,567 of 5,911 km — is plausibly beyond road-based camera reach.</div>
+    <a href="pilots/covered-city/01_mapping_the_covered_city.html">Open pilot repository <span>→</span></a>
+  </div>
+  <div class="pilot">
+    <div class="pno">Pilot 02 · Affordance</div>
+    <div class="pt">Where the Invisible City Could Afford to Linger</div>
+    <div class="pd">SVI-invisible and SVI-visible covered segments are compared by proximity to benches, shelters, hawker/food courts, community centres, and playgrounds.</div>
+    <div class="metric"><b>Current result:</b><br>19.5% of SVI-invisible segments are affordance-adjacent at 20 m, compared with 6.1% of SVI-visible segments.</div>
+    <a href="pilots/covered-city/02_threshold_affordance_overlay.html">Open pilot repository <span>→</span></a>
+  </div>
+  <div class="pilot">
+    <div class="pno">Pilot 03 · Transmissibility</div>
+    <div class="pt">Does the Network Carry the Signal?</div>
+    <div class="pd">A first, narrower validation step ahead of the full graph-diffusion model (Plate 01): does SVI-invisibility itself cluster more along the covered network's own connectivity than along simple geographic proximity?</div>
+    <div class="metric"><b>Current result:</b><br>Moran's I rises from 0.64 (simple proximity, KNN-6) to 0.79 (walkway-connectivity graph) for SVI-visibility — a +0.15 gap, p&lt;0.001. Invisibility clusters more tightly along the network than along distance alone.</div>
+    <a href="pilots/covered-city/03_network_vs_proximity_pilot.html">Open pilot repository <span>→</span></a>
+  </div>
+</div>
+
+<div class="pull reveal">
+  <q>The research does not claim that open data can see human relations. It asks whether open data can reveal where the city has built the spatial preconditions for such relations — and where dominant sensing systems fail to register them.</q>
+  <span class="by">Positioning line for applications</span>
+</div>
+
+<figure class="reveal narrow">
+  <div class="diag dark">
+    <svg viewBox="0 0 700 380" role="img" aria-label="Comparison of Moran's I under simple proximity versus network-connectivity weights">
+      <rect width="700" height="380" fill="#0c1116"/>
+      <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#a9bec6">
+        <line x1="80" y1="60" x2="80" y2="300" stroke="#3a4750" stroke-width="1"/>
+        <line x1="80" y1="300" x2="640" y2="300" stroke="#3a4750" stroke-width="1"/>
+        <text x="60" y="65" text-anchor="end">1.0</text>
+        <text x="60" y="182" text-anchor="end">0.5</text>
+        <text x="60" y="300" text-anchor="end">0</text>
+        <line x1="80" y1="60" x2="640" y2="60" stroke="#232b31" stroke-width="1"/>
+        <line x1="80" y1="180" x2="640" y2="180" stroke="#232b31" stroke-width="1"/>
+      </g>
+      <!-- distance to road (continuous) -->
+      <rect x="150" y="88" width="60" height="212" fill="none" stroke="#5e6a72" stroke-width="1.5"/>
+      <text x="180" y="82" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="#fff">0.88</text>
+      <rect x="225" y="55" width="60" height="245" fill="#133a52" stroke="#27e0c4" stroke-width="1.5"/>
+      <text x="255" y="49" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="#27e0c4" font-weight="600">0.93</text>
+      <text x="217" y="330" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#cfe6e0">dist. to road</text>
+      <text x="217" y="348" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#7f8b93">(continuous)</text>
+      <!-- SVI-visible (binary) -->
+      <rect x="405" y="147" width="60" height="153" fill="none" stroke="#5e6a72" stroke-width="1.5"/>
+      <text x="435" y="141" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="#fff">0.64</text>
+      <rect x="480" y="63" width="60" height="237" fill="#133a52" stroke="#0a84ff" stroke-width="1.5"/>
+      <text x="510" y="57" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="#89c7ff" font-weight="600">0.79</text>
+      <text x="472" y="330" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#cfe6e0">SVI-visible</text>
+      <text x="472" y="348" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#7f8b93">(binary)</text>
+      <g font-family="IBM Plex Mono, monospace" font-size="11">
+        <rect x="150" y="360" width="14" height="10" fill="none" stroke="#5e6a72"/>
+        <text x="170" y="369" fill="#a9bec6">W_geo — simple proximity (KNN-6)</text>
+        <rect x="430" y="360" width="14" height="10" fill="#133a52" stroke="#27e0c4"/>
+        <text x="450" y="369" fill="#a9bec6">W_net — walkway-connectivity graph</text>
+      </g>
+      <text x="360" y="26" text-anchor="middle" font-family="Playfair Display, serif" font-size="18" fill="#fff">Global Moran's I, two weightings</text>
+    </svg>
+  </div>
+  <figcaption><b>Fig. 03 &mdash; Network topology explains more clustering than plain proximity.</b> Bounded pilot area, 7,970 covered segments, 999-permutation significance (p&lt;0.001 throughout). Full method and executed notebook in the Pilot 03 packet.</figcaption>
+</figure>
+<div class="side-note reveal"><p>Margin note: this test operates directly on SVI-visibility, not yet on a diffused affordance score. It is evidence that the network-connectivity logic behind Plate 01 already holds before the fuller diffusion equation is run on a real affordance dataset &mdash; a validated stepping stone, not a substitute for it.</p></div>
+
+<div class="secdiv"><span class="secnum">Section 04</span><span class="ln"></span><span class="pl">+</span></div>
+<h2>What Open Data Can <span class="it">Legitimately</span> Produce</h2>
+<p class="sec-intro">The research is strongest when each output is precise about its evidentiary status. The open-data stage is a hypothesis generator, a sampling engine, and a spatial argument — not a substitute for human observation.</p>
+
+<div class="matrix-wrap reveal">
+  <table class="matrix">
+    <thead><tr><th>Output</th><th class="hot">What it contributes</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><th>Visibility map</th><td class="hot-col">Identifies what road-based urban analytics can and cannot see.</td><td>Turns a methodological concern into a mappable data-quality claim.</td></tr>
+      <tr><th>Affordance map</th><td class="hot-col">Locates where lingering-supportive infrastructure is concentrated.</td><td>Shows that hidden spaces may not be residual; they may be materially prepared for public life.</td></tr>
+      <tr><th>Transmissibility map</th><td class="hot-col">Models whether affordances connect through pedestrian threshold networks.</td><td>Moves from isolated amenities to computational architecture: sequences, edges, fields, and connectivity.</td></tr>
+      <tr><th>Blind-spot map</th><td class="hot-col">Crosses high-transmissibility fields with SVI invisibility.</td><td>Identifies where relationally suggestive urban environments may be under-seen by dominant data systems.</td></tr>
+      <tr><th>Sampling frame</th><td class="hot-col">Selects future fieldwork sites from clear spatial categories.</td><td>Prevents anecdotal site selection and makes later qualitative work methodologically legible.</td></tr>
+      <tr><th>Threshold typology</th><td class="hot-col">Classifies different relational field types: playground-care, hawker-edge, shelter-waiting, void-deck, transit-spillover.</td><td>Translates analysis back into design, planning, and regenerative urbanism.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="secdiv" id="next"><span class="secnum">Section 05</span><span class="ln"></span><span class="pl">+</span></div>
+<h2>Further Steps: From MVP to <span class="it">PhD Study</span></h2>
+<p class="sec-intro">The full study should move from open-data inference to mixed-method validation. The most important analytical object is the mismatch between what the model expects and what human observation later reveals.</p>
+
+<div class="quad-wrap reveal">
+  <div class="quad">
+    <div class="qhead qcorner">Observed holding →<br>Expected capacity ↓</div><div class="qhead">Low observed holding</div><div class="qhead">High observed holding</div>
+    <div class="qaxis">High expected capacity</div><div class="qcool"><b>Designed but inhibited</b> Affordances exist, but use may be suppressed by exposure, surveillance, heat, discomfort, ambiguity, or social coding.</div><div class="qhot"><b>Successful relational threshold</b> Spatial capacity corresponds to lived public life. These become positive cases for design learning.</div>
+    <div class="qaxis last">Low expected capacity</div><div class="qcool last"><b>Transitional / weak threshold</b> Spaces may be primarily movement corridors or analytically unremarkable.</div><div class="qhot last"><b>Informally appropriated hotspot</b> The model misses what people know. These residuals are the most valuable sites for deeper inquiry.</div>
+  </div>
+</div>
+
+<div class="traj-wrap reveal">
+  <ul class="traj">
+    <li><div class="what"><b>Phase A:</b> validate that network-connectivity weights outperform simple proximity on SVI-visibility (done); sweep the bridging threshold and extend island-wide.</div><div class="skills">GeoPandas · NetworkX · libpysal / esda · Moran's I &amp; LISA · sensitivity sweeps</div><div class="date">Now</div></li>
+    <li><div class="what"><b>Phase B:</b> select fieldwork sites using the four-quadrant sampling frame.</div><div class="skills">SVI visibility × affordance richness × graph transmissibility × urban context</div><div class="date">Next</div></li>
+    <li><div class="what"><b>Phase C:</b> validate through structured observation and environmental audits.</div><div class="skills">Dwell time · co-presence · waiting · informal seating · age mix · temporal use</div><div class="date">PhD year 1–2</div></li>
+    <li><div class="what"><b>Phase D:</b> add walking interviews, participatory mapping, and photo-elicitation.</div><div class="skills">Situated accounts · lived thresholds · comfort · recognition · avoidance · care</div><div class="date">PhD year 2</div></li>
+    <li><div class="what"><b>Phase E:</b> synthesize a relational threshold typology for regenerative urbanism.</div><div class="skills">Design principles · planning implications · computational architecture framework</div><div class="date">PhD year 3+</div></li>
+  </ul>
+</div>
+
+<div class="downloads" id="documents">
+  <div class="downloads-inner">
+    <div class="dl-eyebrow">Repositories and evidence</div>
+    <div class="dl-head">The page stands alone.<br><span class="it">The links go deeper.</span></div>
+    <p class="dl-sub">The landing page should be readable as a complete research brief. Each repository card serves as evidence for readers who want to inspect code, notebooks, figures, method notes, or future fieldwork instruments.</p>
+    <div class="papers">
+      <div class="paper">
+        <div class="pno">01</div><div class="pt">Open-data pilots</div>
+        <div class="pd">Visibility audit, threshold affordance overlay, sensitivity tables, maps, and reproducible notebooks.</div>
+        <a href="pilots/covered-city/">Open repository <span>→</span></a>
+      </div>
+      <div class="paper">
+        <div class="pno">02</div><div class="pt">Threshold transmissibility packet</div>
+        <div class="pd">Runnable MVP for graph-diffused affordance exposure using open geospatial data.</div>
+        <a href="pilot_03_threshold_transmissibility_packet.zip">Download packet <span>→</span></a>
+      </div>
+      <div class="paper">
+        <div class="pno">03</div><div class="pt">Research notes and archive</div>
+        <div class="pd">Conceptual notes on relational holding, regenerative urbanism, computational architecture, and the broader learning archive.</div>
+        <a href="docs/">Read notes <span>→</span></a>
+      </div>
+    </div>
+    <p class="dl-foot">Suggested landing-page role: this is the application-facing overview. It should not behave like a file directory. It should make the intent, research direction, pilot evidence, and next steps legible before any reader clicks elsewhere.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="fm">
+    LIN WEI · SINGAPORE-BASED DESIGN PRACTITIONER, EDUCATOR, AND PRACTITIONER-RESEARCHER<br>
+    COMPUTATIONAL ARCHITECTURE · RELATIONAL THRESHOLD URBANISM · REGENERATIVE URBANISM · OPEN GEOSPATIAL METHODS<br>
+    <a href="mailto:lin.wei@uniteddesignpractice.com">lin.wei@uniteddesignpractice.com</a>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  function renderMath(){
+    if (window.renderMathInElement) {
+      renderMathInElement(document.body, { delimiters: [{left:"$$", right:"$$", display:true}] });
+    }
+  }
+  window.addEventListener('DOMContentLoaded', renderMath);
+  document.addEventListener('readystatechange', () => { if (document.readyState === 'complete') renderMath(); });
+</script>
+</body>
+</html>
