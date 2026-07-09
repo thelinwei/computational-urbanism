@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilot 03 — Does the Network Carry the Signal? · Lin Wei</title>
+<meta name="description" content="Pilot 03: does SVI-invisibility cluster more along the covered network's own connectivity than along simple geographic proximity?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c1116; --paper:#ffffff; --steel:#133a52; --steel-2:#1f5e7a;
+    --acid:#27e0c4; --signal:#0a84ff; --dim:#5e6a72; --hair:#d3dde2;
+    --mist:#e2f6f2; --amber:#e8c88a; --red:#b0332a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .blacktab{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:6px 12px}
+
+  .runhead{border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:13px 34px;position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);z-index:40}
+  .runhead .l a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:11.5px;border-bottom:1px solid var(--hair)}
+  .runhead .l a:hover{border-bottom-color:var(--signal);color:var(--signal)}
+
+  .opener{padding:60px 34px 30px;max-width:1100px;margin:0 auto}
+  .opener .kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+  .opener .credit{font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.6;margin-bottom:22px;color:var(--dim)}
+  h1.headline{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(32px,5.6vw,62px);line-height:1.05;letter-spacing:-.01em;max-width:920px}
+  h1.headline .it{font-style:italic;font-weight:400;color:var(--steel-2)}
+  .standfirst{font-size:clamp(18px,2.1vw,22px);line-height:1.5;max-width:780px;margin:30px 0 6px;color:#232b31}
+  .standfirst b{font-weight:600}
+
+  .article{padding:20px 34px 10px;max-width:1100px;margin:0 auto}
+  .article p{margin:0 0 16px;font-size:16.5px;max-width:760px}
+  .article strong{font-weight:600;color:var(--steel)}
+
+  .secdiv{display:flex;align-items:center;gap:16px;max-width:1100px;margin:56px auto 6px;padding:0 34px}
+  .secdiv .ln{height:2px;background:var(--ink);flex:1}
+  .secnum{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.06;max-width:1100px;margin:12px auto 8px;padding:0 34px}
+  h2 .it{font-style:italic;color:var(--steel-2)}
+  .sec-intro{max-width:720px;margin:14px auto 0;padding:0 34px;font-size:17px;line-height:1.55;color:#232b31}
+
+  .codeblock{max-width:1100px;margin:26px auto;padding:0 34px}
+  .codeblock pre{background:var(--ink);color:#cfe6e0;border-radius:6px;padding:20px 22px;overflow-x:auto;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65}
+  .codeblock .filetag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+  .codeblock .cm{color:#7f8b93}
+  .codeblock .kw{color:#89c7ff}
+  .codeblock .st{color:var(--acid)}
+
+  figure{margin:44px auto;max-width:1100px;padding:0 34px}
+  figure img{width:100%;display:block;border:1.5px solid var(--ink);border-radius:2px}
+  figcaption{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--dim);padding:13px 2px 0;line-height:1.6}
+  figcaption b{color:var(--ink);font-weight:600}
+
+  .stat-row{display:flex;flex-wrap:wrap;gap:16px;max-width:1100px;margin:30px auto 0;padding:0 34px}
+  .stat{flex:1;min-width:180px;border:1.5px solid var(--ink);padding:20px 22px}
+  .stat.hi{background:var(--mist)}
+  .stat .num{font-family:'Playfair Display',serif;font-weight:900;font-size:2.4rem;line-height:1;color:var(--steel-2)}
+  .stat .cap{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);text-transform:uppercase;margin-top:8px;letter-spacing:.03em}
+
+  .matrix-wrap{max-width:1100px;margin:30px auto 0;padding:0 34px;overflow-x:auto}
+  table.matrix{width:100%;border-collapse:collapse;font-size:14.5px;min-width:520px}
+  table.matrix th,table.matrix td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--hair)}
+  table.matrix thead th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ink)}
+  table.matrix .hot{background:var(--mist)}
+  table.matrix td b{font-weight:600;color:var(--steel)}
+
+  .pull{max-width:840px;margin:54px auto;padding:0 34px;text-align:center}
+  .pull q{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(21px,3.2vw,32px);line-height:1.22;quotes:none}
+
+  .limits{max-width:1100px;margin:24px auto 0;padding:0 34px}
+  .limits ol{padding-left:22px}
+  .limits li{margin-bottom:14px;font-size:15.5px;line-height:1.5;max-width:740px}
+  .limits li b{color:var(--steel)}
+
+  .side-note{max-width:1100px;margin:26px auto 0;padding:0 34px}
+  .side-note p{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.03em;line-height:1.7;color:var(--dim);border-left:2px solid var(--acid);padding-left:14px}
+
+  .downloads{background:radial-gradient(120% 90% at 50% 0%, #1f5e7a 0%, #133a52 55%, #081f2d 100%);color:#fff;padding:54px 34px;margin-top:60px}
+  .downloads-inner{max-width:1100px;margin:0 auto}
+  .dl-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--acid);margin-bottom:16px}
+  .dl-grid{display:flex;flex-wrap:wrap;gap:1.5px;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.16)}
+  .dl-card{flex:1;min-width:220px;background:#0f3043;padding:22px 24px}
+  .dl-card .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--acid);letter-spacing:.1em;margin-bottom:8px}
+  .dl-card a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}
+  .dl-card a:hover{border-bottom-color:var(--acid);color:var(--acid)}
+
+  footer{padding:36px 34px;border-top:2px solid var(--ink);text-align:center}
+  footer .fm{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);line-height:1.9}
+  footer a{color:var(--dim)}footer a:hover{color:var(--signal)}
+
+  @media(max-width:700px){.stat-row{flex-direction:column}.dl-grid{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="runhead">
+  <div class="l"><a href="../../index.html">← Research landing page</a></div>
+  <div><span class="blacktab">Pilot 03 · Network vs. Proximity</span></div>
+</div>
+
+<div class="opener">
+  <div class="kicker">Open-data pilot 03 of 03</div>
+  <div class="credit">Lin Wei · July 2026 · Pilot study for PhD application, Urban Analytics Lab, NUS Architecture</div>
+  <h1 class="headline">Does the Network Carry <span class="it">the Signal?</span></h1>
+  <p class="standfirst">A first, narrower validation step ahead of a fuller graph-diffusion model: does SVI-invisibility itself cluster more strongly along the covered pedestrian network's own connectivity than along simple geographic proximity? Tested entirely on data already in hand — <b>no new fetch, no fieldwork.</b></p>
+</div>
+
+<div class="article">
+  <p>Pilots 01 and 02 established <i>that</i> SVI-invisibility is non-random and concentrates near lingering-supportive infrastructure. This notebook asks a more structural question: is the covered pedestrian network merely a backdrop the invisible segments happen to sit on, or is it itself a <strong>medium</strong> that the invisibility pattern travels along?</p>
+  <p><b>Method in one paragraph.</b> Within a bounded pilot area, every covered segment becomes a spatial unit. Two spatial weights matrices are built over the same segments: <code class="mono">W_geo</code>, a conventional K-nearest-neighbour matrix based on straight-line distance between segment centroids; and <code class="mono">W_net</code>, a matrix built from the walkway network's own topology — two segments are "neighbours" only if they physically connect, independent of Euclidean distance. Global Moran's I and Local Moran (LISA) are computed for the same variable under both matrices.</p>
+</div>
+
+<div class="secdiv"><span class="secnum">Section 01</span><span class="ln"></span></div>
+<h2>Building the <span class="it">network graph</span></h2>
+<p class="sec-intro">The covered network has no single tag in OSM (Pilot 01's finding), so it doesn't arrive pre-linked — segments drawn under different tagging conventions can sit metres apart without sharing a node. Two segments are treated as network-neighbours if their endpoints fall within a snap tolerance of each other; any segment still isolated after snapping is bridged to its nearest neighbour within a wider cutoff, and segments still isolated after that are excluded and reported plainly.</p>
+
+<div class="codeblock">
+  <div class="filetag">03_network_vs_proximity_pilot.ipynb — cell 2</div>
+  <pre><span class="cm"># %% 2. Endpoint-snap graph + isolate bridging</span>
+SNAP_M = <span class="st">8.0</span>          <span class="cm"># endpoints within this distance = same junction</span>
+BRIDGE_CUTOFF_M = <span class="st">40.0</span>  <span class="cm"># remaining isolates get one edge within this radius</span>
+
+<span class="cm"># → 7,890 edges, 541 segments (6.8%) still disconnected in OSM — excluded below</span></pre>
+</div>
+
+<div class="secdiv"><span class="secnum">Section 02</span><span class="ln"></span></div>
+<h2>Two weights matrices, <span class="it">same segments</span></h2>
+<p class="sec-intro"><code class="mono">W_net</code> comes straight from the graph above. <code class="mono">W_geo</code> is a conventional K-nearest-neighbour matrix (k = 6) on the same segments' centroids — the standard "simple proximity" baseline any reviewer would expect ruled out before a network-topology claim is taken seriously. Both are restricted to the same connected subset so the comparison is apples-to-apples.</p>
+
+<div class="stat-row">
+  <div class="stat hi"><div class="num">7,970</div><div class="cap">covered segments in the bounded pilot area</div></div>
+  <div class="stat"><div class="num">6.8%</div><div class="cap">genuinely disconnected in OSM — excluded, not hidden</div></div>
+  <div class="stat"><div class="num">999</div><div class="cap">permutations for every significance test</div></div>
+</div>
+
+<div class="secdiv"><span class="secnum">Section 03</span><span class="ln"></span></div>
+<h2>Global Moran's I — <span class="it">the network wins</span></h2>
+<p class="sec-intro">Two variables, in increasing order of "already trusted": <code class="mono">dist_to_road_m</code> (the continuous SVI-visibility proxy from Pilot 01) and <code class="mono">svi_visible</code> itself (the binary classification actually used in Pilots 01–02). If <code class="mono">W_net</code> produces a higher Moran's I than <code class="mono">W_geo</code> on both, the walkway network is carrying real structure that simple distance misses.</p>
+
+<div class="matrix-wrap">
+  <table class="matrix">
+    <thead><tr><th>Variable</th><th>W_geo (KNN-6)</th><th class="hot">W_net (walkway graph)</th><th>Gap</th></tr></thead>
+    <tbody>
+      <tr><td>Distance to road (continuous)</td><td>0.884</td><td class="hot"><b>0.928</b></td><td>+0.044</td></tr>
+      <tr><td>SVI-visible (binary)</td><td>0.638</td><td class="hot"><b>0.787</b></td><td>+0.150</td></tr>
+    </tbody>
+  </table>
+</div>
+<p class="sec-intro" style="margin-top:16px">Both significant at p&lt;0.001 under 999 permutations. The gap is modest for the continuous variable — distance to road is itself already a locally smooth quantity, so much of its clustering shows up under either weighting — but substantial for the binary SVI-visibility classification actually used downstream: a 15-point jump in Moran's I.</p>
+
+<figure>
+  <img src="figures/moran_comparison.png" alt="Bar chart comparing Global Moran's I under simple proximity versus network-connectivity weights">
+  <figcaption><b>Fig. 1 — Does the covered network carry more structure than plain geographic proximity?</b> Grey bars: simple-proximity weights. Blue bars: walkway-connectivity weights. Both variables tested rise under network weighting; the binary SVI-visibility variable rises the most.</figcaption>
+</figure>
+
+<div class="pull">
+  <q>SVI-invisibility clusters more tightly along the physical structure of the covered network than along simple geographic distance. The network is not a neutral backdrop — it's the medium.</q>
+</div>
+
+<div class="secdiv"><span class="secnum">Section 04</span><span class="ln"></span></div>
+<h2>Local Moran — <span class="it">where, and where it breaks</span></h2>
+<p class="sec-intro">Global Moran's I says the network carries more structure overall. LISA localises that: which segments sit inside a spatially-coherent invisible pocket (HH), which sit inside a visible pocket (LL), and — the more interesting cases — which segments are the opposite of their network neighbours (HL/LH). Those spatial outliers are exactly the sites a future fieldwork phase would prioritise.</p>
+
+<div class="stat-row">
+  <div class="stat"><div class="num">624</div><div class="cap">segments in a significant invisible cluster (HH)</div></div>
+  <div class="stat"><div class="num">1,230</div><div class="cap">segments in a significant visible cluster (LL)</div></div>
+  <div class="stat hi"><div class="num">27</div><div class="cap">spatial outliers (HL/LH) — the fieldwork shortlist</div></div>
+</div>
+
+<figure>
+  <img src="figures/lisa_cluster_map.png" alt="LISA cluster map of distance-to-road under walkway-connectivity weights">
+  <figcaption><b>Fig. 2 — LISA clusters of distance-to-road, under walkway-connectivity weights.</b> Red = significant invisible cluster (HH). Teal = significant visible cluster (LL). Amber/purple = spatial outliers (HL/LH) — segments whose visibility status runs against their immediate network neighbourhood.</figcaption>
+</figure>
+
+<div class="secdiv"><span class="secnum">Findings</span><span class="ln"></span></div>
+<h2>What this does, and <span class="it">does not</span>, show</h2>
+<div class="article">
+  <p>Within the bounded pilot area (7,970 covered segments, 6.8% excluded as genuinely disconnected in OSM's tagging of the covered network — itself a small echo of Pilot 01's finding that this network has no stable identity in the data), the walkway-connectivity weights matrix produced a higher Global Moran's I than the plain-distance baseline for both variables tested, most substantially for the binary SVI-visibility classification actually used downstream in Pilots 01–02.</p>
+  <p>LISA localises this into 624 segments in a significant invisible cluster, 1,230 in a visible cluster, and 27 spatial outliers — segments whose visibility status runs against their immediate network neighbourhood. Those 27 are the natural shortlist for a fieldwork phase: places where the network's connective logic and the actual outcome diverge, which is exactly the residual-as-design-signal move from the threshold-affordance framing, applied one level down.</p>
+  <p><b>What this pilot does not show.</b> It says nothing about behaviour — lingering, holding, care — because none of the inputs are behavioural. It is a test of whether a purely open-data-derived property propagates along network structure, not a test of whether social life does. That is a deliberate scope limit, not an oversight: it is the honest ceiling of what open data alone can carry, and the reason a later fieldwork phase remains necessary rather than optional.</p>
+</div>
+
+<div class="secdiv"><span class="secnum">Limits</span><span class="ln"></span></div>
+<h2>Where the Method <span class="it">Runs Out</span></h2>
+<div class="limits">
+  <ol>
+    <li><b>The 40 m bridge cutoff is a modelling choice, not a measured fact.</b> It treats segments separated by a plausible tagging gap as connected. A follow-up should sweep this parameter the way Pilots 01–02 swept their thresholds, to confirm the network-weights advantage isn't an artefact of one cutoff choice.</li>
+    <li><b>One bounded pilot area, chosen for tractability.</b> The result should be read as a proof of concept for the method, not a citywide claim; a full run needs the same pipeline applied island-wide.</li>
+    <li><b><code class="mono">dist_to_road_m</code> is a proxy for a proxy.</b> It is Pilot 01's floor estimate of SVI-invisibility, not a direct visibility measurement — every caveat from Pilot 01 propagates forward into this result.</li>
+    <li><b>No affordance/capacity variable yet.</b> This pilot deliberately substitutes SVI-visibility for the affordance-adjacency signal rather than reconstruct it from memory; the same comparison should be re-run on that variable once it exists as a saved file (see Pilot 02's own note on this).</li>
+  </ol>
+</div>
+
+<div class="downloads">
+  <div class="downloads-inner">
+    <div class="dl-eyebrow">Reproduce or inspect</div>
+    <div class="dl-grid">
+      <div class="dl-card"><div class="k">NOTEBOOK</div><a href="03_network_vs_proximity_pilot.ipynb">03_network_vs_proximity_pilot.ipynb →</a></div>
+      <div class="dl-card"><div class="k">COMPARISON DATA</div><a href="data/moran_comparison.csv">moran_comparison.csv →</a></div>
+      <div class="dl-card"><div class="k">LISA DATA</div><a href="data/pilot03_lisa.geojson">pilot03_lisa.geojson →</a></div>
+      <div class="dl-card"><div class="k">PREREQUISITE</div><a href="01_mapping_the_covered_city.html">← Pilot 01: Mapping the Covered City</a></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fm">
+    LIN WEI · SINGAPORE-BASED DESIGN PRACTITIONER, EDUCATOR, AND PRACTITIONER-RESEARCHER<br>
+    <a href="mailto:lin.wei@uniteddesignpractice.com">lin.wei@uniteddesignpractice.com</a> · <a href="../../index.html">← Back to research landing page</a>
+  </div>
+</footer>
+
+</body>
+</html>

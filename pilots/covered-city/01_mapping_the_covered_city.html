@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilot 01 — Mapping the Covered City · Lin Wei</title>
+<meta name="description" content="Pilot 01: how much of Singapore's covered pedestrian network is plausibly invisible to road-based street-view imagery.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c1116; --paper:#ffffff; --steel:#133a52; --steel-2:#1f5e7a;
+    --acid:#27e0c4; --signal:#0a84ff; --dim:#5e6a72; --hair:#d3dde2;
+    --mist:#e2f6f2; --amber:#e8c88a; --red:#b0332a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .boxlabel{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;border:1.5px solid var(--ink);padding:6px 11px}
+  .blacktab{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:6px 12px}
+
+  .runhead{border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:13px 34px;position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);z-index:40}
+  .runhead .l{display:flex;align-items:center;gap:10px}
+  .runhead .r{font-family:'IBM Plex Mono',monospace;font-size:11.5px}
+  .runhead .r a{text-decoration:none;border-bottom:1px solid var(--hair)}
+  .runhead .r a:hover{border-bottom-color:var(--signal);color:var(--signal)}
+
+  .opener{padding:60px 34px 30px;max-width:1100px;margin:0 auto}
+  .opener .kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+  .opener .credit{font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.6;margin-bottom:22px;color:var(--dim)}
+  h1.headline{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(36px,6.6vw,72px);line-height:1.02;letter-spacing:-.01em;max-width:900px}
+  h1.headline .it{font-style:italic;font-weight:400;color:var(--steel-2)}
+  .standfirst{font-size:clamp(18px,2.1vw,22px);line-height:1.5;max-width:780px;margin:30px 0 6px;color:#232b31}
+  .standfirst b{font-weight:600}
+
+  .article{padding:20px 34px 10px;max-width:1100px;margin:0 auto}
+  .article p{margin:0 0 16px;font-size:16.5px;max-width:760px}
+  .article strong{font-weight:600;color:var(--steel)}
+  .term{border-bottom:1.5px dotted var(--signal);font-weight:600}
+
+  .secdiv{display:flex;align-items:center;gap:16px;max-width:1100px;margin:56px auto 6px;padding:0 34px}
+  .secdiv .ln{height:2px;background:var(--ink);flex:1}
+  .secnum{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.06;max-width:1100px;margin:12px auto 8px;padding:0 34px}
+  h2 .it{font-style:italic;color:var(--steel-2)}
+  .sec-intro{max-width:720px;margin:14px auto 0;padding:0 34px;font-size:17px;line-height:1.55;color:#232b31}
+
+  .tagtable{max-width:1100px;margin:24px auto 0;padding:0 34px;overflow-x:auto}
+  table.tags{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+  table.tags th,table.tags td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--hair)}
+  table.tags thead th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ink)}
+  table.tags td code{font-family:'IBM Plex Mono',monospace;font-size:12.5px;background:var(--mist);padding:2px 6px;border-radius:3px}
+
+  .codeblock{max-width:1100px;margin:26px auto;padding:0 34px}
+  .codeblock pre{background:var(--ink);color:#cfe6e0;border-radius:6px;padding:20px 22px;overflow-x:auto;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65}
+  .codeblock .filetag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+  .codeblock .cm{color:#7f8b93}
+  .codeblock .kw{color:#89c7ff}
+  .codeblock .st{color:var(--acid)}
+
+  figure{margin:44px auto;max-width:1100px;padding:0 34px}
+  figure img{width:100%;display:block;border:1.5px solid var(--ink);border-radius:2px}
+  figcaption{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--dim);padding:13px 2px 0;line-height:1.6}
+  figcaption b{color:var(--ink);font-weight:600}
+
+  .stat-row{display:flex;flex-wrap:wrap;gap:16px;max-width:1100px;margin:30px auto 0;padding:0 34px}
+  .stat{flex:1;min-width:180px;border:1.5px solid var(--ink);padding:20px 22px}
+  .stat.hi{background:var(--mist)}
+  .stat .num{font-family:'Playfair Display',serif;font-weight:900;font-size:2.6rem;line-height:1;color:var(--steel-2)}
+  .stat .cap{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);text-transform:uppercase;margin-top:8px;letter-spacing:.03em}
+
+  .pull{max-width:840px;margin:54px auto;padding:0 34px;text-align:center}
+  .pull q{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(21px,3.2vw,32px);line-height:1.22;quotes:none}
+  .pull .by{display:block;margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--signal)}
+
+  .limits{max-width:1100px;margin:24px auto 0;padding:0 34px}
+  .limits ol{padding-left:22px}
+  .limits li{margin-bottom:14px;font-size:15.5px;line-height:1.5;max-width:740px}
+  .limits li b{color:var(--steel)}
+
+  .side-note{max-width:1100px;margin:26px auto 0;padding:0 34px}
+  .side-note p{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.03em;line-height:1.7;color:var(--dim);border-left:2px solid var(--amber);padding-left:14px}
+
+  .downloads{background:radial-gradient(120% 90% at 50% 0%, #1f5e7a 0%, #133a52 55%, #081f2d 100%);color:#fff;padding:54px 34px;margin-top:60px}
+  .downloads-inner{max-width:1100px;margin:0 auto}
+  .dl-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--acid);margin-bottom:16px}
+  .dl-grid{display:flex;flex-wrap:wrap;gap:1.5px;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.16)}
+  .dl-card{flex:1;min-width:220px;background:#0f3043;padding:22px 24px}
+  .dl-card .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--acid);letter-spacing:.1em;margin-bottom:8px}
+  .dl-card a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}
+  .dl-card a:hover{border-bottom-color:var(--acid);color:var(--acid)}
+
+  footer{padding:36px 34px;border-top:2px solid var(--ink);text-align:center}
+  footer .fm{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);line-height:1.9}
+  footer a{color:var(--dim)}footer a:hover{color:var(--signal)}
+
+  @media(max-width:700px){.stat-row{flex-direction:column}.dl-grid{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="runhead">
+  <div class="l"><a href="../../index.html" class="mono" style="text-decoration:none;font-size:11.5px;border-bottom:1px solid var(--hair)">← Research landing page</a></div>
+  <div class="r"><span class="blacktab">Pilot 01 · Visibility</span></div>
+</div>
+
+<div class="opener">
+  <div class="kicker">Open-data pilot 01 of 03</div>
+  <div class="credit">Lin Wei · July 2026 · Pilot study for PhD application, Urban Analytics Lab, NUS Architecture</div>
+  <h1 class="headline">Mapping the <span class="it">Covered City</span></h1>
+  <p class="standfirst">How much of Singapore's walkable public realm is invisible to road-based street-view imagery? A covered footway segment is treated as <b>plausibly visible</b> if it lies within 20 m of a drivable road, and <b>plausibly invisible</b> otherwise — a deliberately crude, transparent, reproducible proxy. The point isn't precision; it's making a data-quality argument <b>with data</b>.</p>
+</div>
+
+<div class="article">
+  <p>In the accompanying writing sample (<i>Seeing Thresholds</i>, §1 and §4), the argument is that Singapore's pedestrian realm is genuinely three-dimensional — covered linkways, through-block connections, elevated links — and that road-based street-view imagery (SVI) is structurally blind to much of it. This notebook turns that claim into a number.</p>
+  <p>This notebook demonstrates, for the reviewer: open geospatial data acquisition (<code class="mono">osmnx</code>), projection and spatial operations in Singapore's national projected CRS (<code class="mono">geopandas</code>, <code class="mono">shapely</code>), network-adjacent buffer analysis, cartographic output, and an explicit limitations section — including how OSM's own under-tagging of covered walkways is itself an instance of the threshold-space missingness problem it's trying to measure.</p>
+</div>
+
+<div class="secdiv"><span class="secnum">Section 01</span><span class="ln"></span></div>
+<h2>The covered network has no <span class="it">single name</span></h2>
+<p class="sec-intro">OSM has no single "covered linkway" tag; coverage is spread across several tagging practices. Querying the union of the most common ones, and keeping provenance, becomes a finding in itself — the covered pedestrian realm doesn't have a stable identity in the world's largest open geodata project.</p>
+
+<div class="tagtable">
+  <table class="tags">
+    <thead><tr><th>Tag pattern</th><th>Typically captures</th></tr></thead>
+    <tbody>
+      <tr><td><code>highway=footway</code> + <code>covered=yes</code></td><td>sheltered walkways, linkways</td></tr>
+      <tr><td><code>highway=path/pedestrian</code> + <code>covered=yes</code></td><td>plazas, park connectors under cover</td></tr>
+      <tr><td><code>tunnel=building_passage</code></td><td>through-block connections, void-deck passages</td></tr>
+      <tr><td><code>highway=footway</code> + <code>indoor=yes</code></td><td>mall-integrated and concourse links</td></tr>
+      <tr><td><code>highway=corridor</code></td><td>interior pedestrian corridors</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="secdiv"><span class="secnum">Section 02</span><span class="ln"></span></div>
+<h2>The visibility proxy, <span class="it">defined</span></h2>
+<p class="sec-intro">A covered segment is <b>plausibly SVI-visible</b> if its distance to the nearest drivable road is ≤ 20 m — roughly the range at which a car-mounted camera might capture a walkway alongside the road, before occlusion is even considered. The proxy deliberately ignores actual SVI coverage of each road, occlusion by buildings and vegetation, camera orientation, walkway elevation, and interior conditions. Every one of these omissions makes the proxy <i>optimistic</i> about visibility — the true invisible share is almost certainly higher than what's computed here. <b>The proxy is a floor, not an estimate.</b></p>
+
+<div class="codeblock">
+  <div class="filetag">01_mapping_the_covered_city.ipynb — cell 8</div>
+  <pre><span class="cm"># %% 3. Distance from every covered segment to the nearest drivable road</span>
+covered[<span class="st">"dist_to_road_m"</span>] = covered.geometry.apply(<span class="kw">lambda</span> g: g.distance(drive_union))
+covered[<span class="st">"svi_visible"</span>] = covered.dist_to_road_m &lt;= SVI_VISIBILITY_THRESHOLD_M
+
+<span class="cm"># → 26.5% of 5,911 km lies beyond 20 m of any drivable road</span></pre>
+</div>
+
+<div class="stat-row">
+  <div class="stat hi"><div class="num">5,911 km</div><div class="cap">total OSM-tagged covered network</div></div>
+  <div class="stat hi"><div class="num">26.5%</div><div class="cap">plausibly SVI-invisible (1,567 km)</div></div>
+  <div class="stat"><div class="num">17%</div><div class="cap">invisible share within 200 m of an MRT/LRT entrance</div></div>
+</div>
+
+<figure>
+  <img src="figures/island_covered_visibility.png" alt="Singapore's covered pedestrian realm vs road-based SVI visibility, island-wide map">
+  <figcaption><b>Fig. 1 — Singapore's covered pedestrian realm vs. road-based SVI visibility (proxy).</b> Teal = plausibly visible from a drivable road; amber = plausibly invisible. The amber is the part of everyday pedestrian Singapore that a road-based SVI dataset does not see.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/zoom_covered_visibility.png" alt="Queenstown zoom: covered ways by SVI visibility with station entrances marked">
+  <figcaption><b>Fig. 2 — Queenstown, town-centre zoom.</b> Same classification, texture-scale — station entrances marked ▲. Amber routes threading through the residential interior, away from any road, are exactly the class of space this pilot argues current SVI-based analytics cannot see.</figcaption>
+</figure>
+
+<div class="secdiv"><span class="secnum">Section 03</span><span class="ln"></span></div>
+<h2>The counter-intuitive <span class="it">result</span></h2>
+<p class="sec-intro">The hypothesis going in was that transit thresholds — covered, interiorised — would be especially hidden from road-based imagery. The opposite turned out to be true: covered ways within 200 m of an MRT/LRT entrance (520 entrances, 791 km of covered network) are <i>less</i> invisible than the island-wide average — <b>17%</b> versus 26.5%.</p>
+<p class="sec-intro" style="margin-top:14px">The likely explanation is structural, not experiential: station entrances are typically sited along or adjacent to arterial roads (bus interchanges, drop-off points), which relocates the invisibility problem away from the station threshold itself and toward the deeper residential fabric — inter-block linkways and void-deck routes threading through housing estates, away from any road. It is not transit thresholds but <b>void-deck and estate-interior thresholds</b> that represent the empirical worst case for what current urban-analytics infrastructure can see at all.</p>
+
+<figure class="narrow">
+  <img src="figures/sensitivity.png" alt="Sensitivity of the headline invisibility figure to the visibility threshold choice">
+  <figcaption><b>Fig. 3 — Sensitivity check.</b> The headline number is not an artefact of the 20 m constant: across a 10–50 m sweep, the invisible share ranges from 32.9% down to 17.8% — a real but bounded sensitivity, never dropping below roughly one in six kilometres.</figcaption>
+</figure>
+
+<div class="pull">
+  <q>It is not simply that road-based street-view imagery misses part of the covered network. The question that follows — whether it misses the parts that matter — is Pilot 02's.</q>
+</div>
+
+<div class="secdiv"><span class="secnum">Historical note</span><span class="ln"></span></div>
+<h2>The <span class="it">five-foot way</span></h2>
+<p class="sec-intro">Worth flagging, though not overclaiming: Singapore's covered pedestrian tradition has a genuine 200-year lineage. Raffles' 1822 Town Plan mandated shophouses provide a covered arcade — the five-foot way — used historically for exactly the behaviours this project studies: resting, hawking, informal commerce, waiting. Five-foot way construction stopped when shophouse-building largely ended in the 1960s, so surviving shophouse stock is a small fraction of the 5,911 km measured here; the modern total is dominated by contemporary HDB/LTA sheltered-walkway infrastructure. Read as historical precedent and conceptual lineage for "threshold affordance," not as an explanation for the present-day figure.</p>
+
+<div class="secdiv"><span class="secnum">Limitations</span><span class="ln"></span></div>
+<h2>Stated as findings, <span class="it">not apologies</span></h2>
+<div class="limits">
+  <ol>
+    <li><b>OSM completeness is itself biased against thresholds.</b> <code class="mono">covered=yes</code> is under-tagged; void-deck routes and mall-interior links are inconsistently mapped. The covered-network total is therefore an undercount — which strengthens, not weakens, the invisibility argument, but means absolute kilometre figures should be read as lower bounds.</li>
+    <li><b>The visibility proxy is geometric, not photographic.</b> It assumes a road within 20 m implies possible capture; real capture depends on actual SVI coverage of that road, occlusion, and camera geometry.</li>
+    <li><b>Elevation is flattened.</b> Elevated links and basement concourses near roads are wrongly counted as "visible"; the true invisible share is higher. A 3D treatment — thresholds as volumes in a city model — is precisely the PhD-scale extension this pilot motivates.</li>
+  </ol>
+</div>
+<div class="side-note"><p>Related UAL work: coverage-and-bias research on street view imagery motivates the visibility question directly; SVI-analysis toolkits and global streetscape datasets motivate why SVI matters in the first place; network-contextual urban analysis frameworks motivate the network-adjacent framing this pilot gestures toward.</p></div>
+
+<div class="downloads">
+  <div class="downloads-inner">
+    <div class="dl-eyebrow">Reproduce or inspect</div>
+    <div class="dl-grid">
+      <div class="dl-card"><div class="k">NOTEBOOK</div><a href="01_mapping_the_covered_city.ipynb">01_mapping_the_covered_city.ipynb →</a></div>
+      <div class="dl-card"><div class="k">OUTPUT DATA</div><a href="data/sg_covered_ways_svi_visibility.geojson">sg_covered_ways_svi_visibility.geojson →</a></div>
+      <div class="dl-card"><div class="k">SWEEP DATA</div><a href="data/sensitivity_sweep.csv">sensitivity_sweep.csv →</a></div>
+      <div class="dl-card"><div class="k">NEXT PILOT</div><a href="02_threshold_affordance_overlay.html">Pilot 02: Threshold Affordance →</a></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fm">
+    LIN WEI · SINGAPORE-BASED DESIGN PRACTITIONER, EDUCATOR, AND PRACTITIONER-RESEARCHER<br>
+    <a href="mailto:lin.wei@uniteddesignpractice.com">lin.wei@uniteddesignpractice.com</a> · <a href="../../index.html">← Back to research landing page</a>
+  </div>
+</footer>
+
+</body>
+</html>

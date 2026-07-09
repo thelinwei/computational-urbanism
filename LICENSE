@@ -1,0 +1,41 @@
+This repository uses a split license, common for academic repos mixing code and written/visual content.
+
+## Code and notebooks — MIT License
+
+Copyright (c) 2026 Lin Wei
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the code and notebook files in this repository (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+## Written notes, figures, and landing-page text — CC BY 4.0
+
+The research notes, method notes, glossary, figures, and the prose content of
+the landing page are licensed under a Creative Commons Attribution 4.0
+International License (CC BY 4.0). To view a copy of this license, visit
+https://creativecommons.org/licenses/by/4.0/
+
+You are free to share and adapt this material for any purpose, provided you
+give appropriate credit to Lin Wei, link to the license, and indicate if
+changes were made.
+
+## Third-party data — ODbL
+
+Pedestrian network geometry and affordance points derived from OpenStreetMap
+are © OpenStreetMap contributors and remain under the Open Database License
+(ODbL) — https://opendatacommons.org/licenses/odbl/. This repository's MIT/CC
+BY terms above apply only to the derived analysis, notebooks, and writing,
+not to the underlying OSM data itself.

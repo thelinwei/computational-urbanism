@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilot 02 — Where the Invisible City Could Afford to Linger · Lin Wei</title>
+<meta name="description" content="Pilot 02: are SVI-invisible covered walkways disproportionately near lingering-supportive infrastructure?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c1116; --paper:#ffffff; --steel:#133a52; --steel-2:#1f5e7a;
+    --acid:#27e0c4; --signal:#0a84ff; --dim:#5e6a72; --hair:#d3dde2;
+    --mist:#e2f6f2; --amber:#e8c88a; --red:#b0332a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .blacktab{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:6px 12px}
+
+  .runhead{border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;padding:13px 34px;position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);z-index:40}
+  .runhead .l a{text-decoration:none;font-family:'IBM Plex Mono',monospace;font-size:11.5px;border-bottom:1px solid var(--hair)}
+  .runhead .l a:hover{border-bottom-color:var(--signal);color:var(--signal)}
+
+  .opener{padding:60px 34px 30px;max-width:1100px;margin:0 auto}
+  .opener .kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+  .opener .credit{font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.6;margin-bottom:22px;color:var(--dim)}
+  h1.headline{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(32px,5.6vw,62px);line-height:1.05;letter-spacing:-.01em;max-width:920px}
+  h1.headline .it{font-style:italic;font-weight:400;color:var(--steel-2)}
+  .standfirst{font-size:clamp(18px,2.1vw,22px);line-height:1.5;max-width:780px;margin:30px 0 6px;color:#232b31}
+  .standfirst b{font-weight:600}
+
+  .article{padding:20px 34px 10px;max-width:1100px;margin:0 auto}
+  .article p{margin:0 0 16px;font-size:16.5px;max-width:760px}
+  .article strong{font-weight:600;color:var(--steel)}
+
+  .secdiv{display:flex;align-items:center;gap:16px;max-width:1100px;margin:56px auto 6px;padding:0 34px}
+  .secdiv .ln{height:2px;background:var(--ink);flex:1}
+  .secnum{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(26px,4vw,40px);line-height:1.06;max-width:1100px;margin:12px auto 8px;padding:0 34px}
+  h2 .it{font-style:italic;color:var(--steel-2)}
+  .sec-intro{max-width:720px;margin:14px auto 0;padding:0 34px;font-size:17px;line-height:1.55;color:#232b31}
+
+  .codeblock{max-width:1100px;margin:26px auto;padding:0 34px}
+  .codeblock pre{background:var(--ink);color:#cfe6e0;border-radius:6px;padding:20px 22px;overflow-x:auto;font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65}
+  .codeblock .filetag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+  .codeblock .cm{color:#7f8b93}
+  .codeblock .kw{color:#89c7ff}
+  .codeblock .st{color:var(--acid)}
+
+  figure{margin:44px auto;max-width:1100px;padding:0 34px}
+  figure img{width:100%;display:block;border:1.5px solid var(--ink);border-radius:2px}
+  figcaption{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--dim);padding:13px 2px 0;line-height:1.6}
+  figcaption b{color:var(--ink);font-weight:600}
+
+  .stat-row{display:flex;flex-wrap:wrap;gap:16px;max-width:1100px;margin:30px auto 0;padding:0 34px}
+  .stat{flex:1;min-width:180px;border:1.5px solid var(--ink);padding:20px 22px}
+  .stat.hi{background:var(--mist)}
+  .stat .num{font-family:'Playfair Display',serif;font-weight:900;font-size:2.4rem;line-height:1;color:var(--red)}
+  .stat .num.cool{color:var(--steel-2)}
+  .stat .cap{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);text-transform:uppercase;margin-top:8px;letter-spacing:.03em}
+
+  .matrix-wrap{max-width:1100px;margin:30px auto 0;padding:0 34px;overflow-x:auto}
+  table.matrix{width:100%;border-collapse:collapse;font-size:14.5px;min-width:520px}
+  table.matrix th,table.matrix td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--hair)}
+  table.matrix thead th{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ink)}
+  table.matrix .hot{background:var(--mist)}
+  table.matrix td b{font-weight:600;color:var(--steel)}
+
+  .pull{max-width:840px;margin:54px auto;padding:0 34px;text-align:center}
+  .pull q{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(21px,3.2vw,32px);line-height:1.22;quotes:none}
+
+  .limits{max-width:1100px;margin:24px auto 0;padding:0 34px}
+  .limits ol{padding-left:22px}
+  .limits li{margin-bottom:14px;font-size:15.5px;line-height:1.5;max-width:740px}
+  .limits li b{color:var(--steel)}
+
+  .side-note{max-width:1100px;margin:26px auto 0;padding:0 34px}
+  .side-note p{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.03em;line-height:1.7;color:var(--dim);border-left:2px solid var(--acid);padding-left:14px}
+
+  .downloads{background:radial-gradient(120% 90% at 50% 0%, #1f5e7a 0%, #133a52 55%, #081f2d 100%);color:#fff;padding:54px 34px;margin-top:60px}
+  .downloads-inner{max-width:1100px;margin:0 auto}
+  .dl-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--acid);margin-bottom:16px}
+  .dl-grid{display:flex;flex-wrap:wrap;gap:1.5px;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.16)}
+  .dl-card{flex:1;min-width:220px;background:#0f3043;padding:22px 24px}
+  .dl-card .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--acid);letter-spacing:.1em;margin-bottom:8px}
+  .dl-card a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}
+  .dl-card a:hover{border-bottom-color:var(--acid);color:var(--acid)}
+
+  footer{padding:36px 34px;border-top:2px solid var(--ink);text-align:center}
+  footer .fm{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);line-height:1.9}
+  footer a{color:var(--dim)}footer a:hover{color:var(--signal)}
+
+  @media(max-width:700px){.stat-row{flex-direction:column}.dl-grid{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="runhead">
+  <div class="l"><a href="../../index.html">← Research landing page</a></div>
+  <div><span class="blacktab">Pilot 02 · Affordance</span></div>
+</div>
+
+<div class="opener">
+  <div class="kicker">Open-data pilot 02 of 03</div>
+  <div class="credit">Lin Wei · July 2026 · Pilot study for PhD application, Urban Analytics Lab, NUS Architecture</div>
+  <h1 class="headline">Where the Invisible City Could Afford <span class="it">to Linger</span></h1>
+  <p class="standfirst">Pilot 01 found that 26.5% of Singapore's covered pedestrian network is plausibly invisible to road-based street-view imagery. This notebook asks the sharper question: <b>are the invisible parts more or less likely to be equipped for lingering</b> than the visible parts — benches, shelters, hawker centres, playgrounds? If invisibility and affordance-richness coincide, that's a materially stronger claim than invisibility alone.</p>
+</div>
+
+<div class="article">
+  <p><b>Why this notebook exists.</b> The original plan for this pilot involved field observation — standing at MRT exits with a stopwatch, counting who paused and who passed through. Under time pressure, this notebook substitutes an open-data-only test of a related question, answerable without leaving the desk.</p>
+  <p><b>The reframing, stated precisely.</b> The accompanying writing sample defines <i>threshold affordance</i> as the <strong>capacity</strong> of a space to invite lingering, waiting, or gathering — not the occurrence of those behaviours on any given day. Infrastructure that materially enables lingering is arguably a more direct operationalisation of <i>capacity</i> than a few hours of field counts would have been, which measure occurrence under one set of weather, time, and social conditions. This is not a lesser substitute for fieldwork; it targets the construct more literally.</p>
+  <p><b>Data sources, all open:</b> OpenStreetMap amenity/leisure tags for lingering-supportive infrastructure (<code class="mono">amenity=bench</code>, <code class="mono">amenity=shelter</code>, <code class="mono">amenity=food_court</code> — the tag Singapore's OSM community uses for hawker centres — <code class="mono">amenity=community_centre</code>, <code class="mono">leisure=playground</code>), cross-referenced against Pilot 01's saved visibility classification. No new environment, no API keys, no fieldwork.</p>
+</div>
+
+<div class="secdiv"><span class="secnum">Section 01</span><span class="ln"></span></div>
+<h2>The core <span class="it">cross-tabulation</span></h2>
+<p class="sec-intro">A segment is <b>affordance-adjacent</b> if any lingering-supportive feature lies within 20 m of it — matching the scale used for the SVI-visibility proxy in Pilot 01, so the two classifications are comparable.</p>
+
+<div class="codeblock">
+  <div class="filetag">02_threshold_affordance_overlay.ipynb — cell 7</div>
+  <pre><span class="cm"># %% 3. Proximity classification</span>
+AFFORDANCE_RADIUS_M = <span class="st">20</span>
+
+covered[<span class="st">"dist_to_affordance_m"</span>] = covered.geometry.apply(<span class="kw">lambda</span> g: g.distance(affordance_union))
+covered[<span class="st">"affordance_adjacent"</span>] = covered.dist_to_affordance_m &lt;= AFFORDANCE_RADIUS_M
+
+<span class="cm"># → 19.5% of SVI-invisible vs 6.1% of SVI-visible</span></pre>
+</div>
+
+<div class="stat-row">
+  <div class="stat"><div class="num">19.5%</div><div class="cap">of SVI-invisible walkway is affordance-adjacent</div></div>
+  <div class="stat hi"><div class="num cool">6.1%</div><div class="cap">of SVI-visible walkway is affordance-adjacent</div></div>
+  <div class="stat"><div class="num">+13.4pp</div><div class="cap">gap — invisible walkway is 3× as likely to be affordance-adjacent</div></div>
+</div>
+
+<figure>
+  <img src="figures/invisible_affordance_overlap.png" alt="Map of where SVI-invisibility and lingering-infrastructure coincide across Singapore">
+  <figcaption><b>Fig. 1 — Where invisibility and lingering-infrastructure coincide.</b> Amber = SVI-invisible only. Red = SVI-invisible <i>and</i> affordance-adjacent — the specific places the argument is about. Dark points are the affordance infrastructure itself (benches, shelters, hawker centres, community centres, playgrounds).</figcaption>
+</figure>
+
+<div class="secdiv"><span class="secnum">Section 02</span><span class="ln"></span></div>
+<h2>Which infrastructure <span class="it">drives the pattern</span></h2>
+<p class="sec-intro">Breaking the cross-tabulation down by affordance type shows the effect isn't spread evenly — it's concentrated in exactly the estate-interior features you'd expect.</p>
+
+<div class="matrix-wrap">
+  <table class="matrix">
+    <thead><tr><th>Affordance type</th><th class="hot">% of invisible walkway adjacent</th><th>% of visible walkway adjacent</th></tr></thead>
+    <tbody>
+      <tr><td><b>Shelter</b></td><td class="hot">9.1%</td><td>2.3%</td></tr>
+      <tr><td><b>Playground</b></td><td class="hot">8.8%</td><td>2.5%</td></tr>
+      <tr><td>Hawker / food court</td><td class="hot">1.4%</td><td>1.0%</td></tr>
+      <tr><td>Community centre</td><td class="hot">—</td><td>—</td></tr>
+    </tbody>
+  </table>
+</div>
+<p class="sec-intro" style="margin-top:16px">Shelter and playground drive nearly all of the effect — both are exactly the kind of estate-interior feature (covered rest points, void-deck-adjacent play areas) that sits deep within housing blocks, away from roads. Hawker centres show almost no difference, plausibly because they require vehicle access for supplies and are therefore also road-adjacent, cancelling out the visibility effect that holds for purely pedestrian infrastructure. Community centres are too rare a feature to move the numbers either way.</p>
+
+<figure class="narrow">
+  <img src="figures/affordance_sensitivity.png" alt="Sensitivity sweep of the affordance-adjacency gap across search radii from 10m to 40m">
+  <figcaption><b>Fig. 2 — Sensitivity check.</b> Both classes' affordance-adjacent share rise as the search radius widens, unsurprising since a wider net catches more amenities regardless of visibility class — but the <i>gap</i> between them widens too, from roughly 7 points at 10 m to roughly 20 points at 40 m. A fragile, threshold-dependent artefact would typically shrink or reverse under this test; this one grows more pronounced.</figcaption>
+</figure>
+
+<div class="pull">
+  <q>Current SVI-based urban analytics is not blind at random. It is blind in a way that correlates with where public life has been given room to happen.</q>
+</div>
+
+<div class="secdiv"><span class="secnum">Limitations</span><span class="ln"></span></div>
+<h2>Stated as findings, <span class="it">not apologies</span></h2>
+<div class="limits">
+  <ol>
+    <li><b>Infrastructure presence is a capacity proxy, not a behavioural one.</b> A bench being within 20 m does not mean anyone uses it. This notebook deliberately targets the <i>capacity</i> sense of threshold affordance, not occurrence — a distinction that should be stated plainly in any use of this finding, not blurred.</li>
+    <li><b>OSM tagging completeness varies by feature type.</b> Benches in particular are inconsistently mapped worldwide; a false negative (a real bench, untagged) is more likely than a false positive — which would, if anything, understate the affordance-adjacent share.</li>
+    <li><b>20 m is a proximity choice, not a measured interaction radius.</b> The sensitivity sweep addresses robustness to this specific choice but not whether 20 m is the geographically meaningful distance at which infrastructure actually shapes use of a threshold.</li>
+    <li><b>This is a structural correlation, not a causal or experiential claim.</b> It says where invisibility and infrastructure coincide on the map — nothing about why, or what happens when people are actually present. Field observation remains the natural next step once time allows.</li>
+  </ol>
+</div>
+
+<div class="side-note"><p>Note on data provenance: this notebook's own saved-output cell writes a per-segment affordance overlay (<code>sg_covered_affordance_overlay.geojson</code>) — but that step hasn't yet been run through to completion and persisted. Re-running this notebook end-to-end would produce it; downstream work (e.g. Pilot 03) currently substitutes SVI-visibility for this variable until that file exists.</p></div>
+
+<div class="downloads">
+  <div class="downloads-inner">
+    <div class="dl-eyebrow">Reproduce or inspect</div>
+    <div class="dl-grid">
+      <div class="dl-card"><div class="k">NOTEBOOK</div><a href="02_threshold_affordance_overlay.ipynb">02_threshold_affordance_overlay.ipynb →</a></div>
+      <div class="dl-card"><div class="k">PREREQUISITE</div><a href="01_mapping_the_covered_city.html">← Pilot 01: Mapping the Covered City</a></div>
+      <div class="dl-card"><div class="k">NEXT PILOT</div><a href="03_network_vs_proximity_pilot.html">Pilot 03: Network vs. Proximity →</a></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fm">
+    LIN WEI · SINGAPORE-BASED DESIGN PRACTITIONER, EDUCATOR, AND PRACTITIONER-RESEARCHER<br>
+    <a href="mailto:lin.wei@uniteddesignpractice.com">lin.wei@uniteddesignpractice.com</a> · <a href="../../index.html">← Back to research landing page</a>
+  </div>
+</footer>
+
+</body>
+</html>
