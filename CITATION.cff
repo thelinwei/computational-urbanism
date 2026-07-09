@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you reference this work, please cite it as below."
+title: "Relational Threshold Urbanism: Open-Data Pilots on Singapore's Covered Pedestrian Network"
+type: dataset
+authors:
+  - family-names: "Wei"
+    given-names: "Lin"
+    affiliation: "United Design Practice, Singapore"
+repository-code: "https://github.com/thelinwei/relational-threshold-urbanism"
+abstract: >
+  A practitioner-researcher portfolio developed in support of PhD applications
+  in computational architecture and urban analytics. Three open-data pilots
+  test whether Singapore's covered pedestrian network is systematically
+  under-represented by road-based street-view imagery, whether that
+  under-representation correlates with lingering-supportive infrastructure,
+  and whether the resulting spatial pattern is better explained by the
+  network's own connectivity than by simple geographic proximity.
+keywords:
+  - urban analytics
+  - computational architecture
+  - spatial autocorrelation
+  - street-view imagery
+  - open geospatial data
+  - threshold urbanism
+  - Singapore
+license: "CC-BY-4.0"
+date-released: 2026-07-09
