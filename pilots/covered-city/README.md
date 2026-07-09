@@ -13,6 +13,8 @@ Every pilot notebook ends with two sections that are treated as findings, not di
 
 **Output.** `data/sg_covered_ways_svi_visibility.geojson` — 73,168 covered segments, each flagged `svi_visible: True/False`. This file is reused as the input to both Pilot 02 and Pilot 03.
 
+> **Note on the hosted copy.** The version actually committed to this repo is `data/sg_covered_ways_svi_visibility_6dp.geojson` — coordinates rounded to 6 decimal places (~11 cm precision, far tighter than the 20 m analysis radius used throughout) purely to fit under GitHub's 25 MB web-upload limit. Running the notebook fresh will regenerate the full-precision, un-suffixed file; rename or re-point `DATA` if you want your local output to match the hosted filename exactly.
+
 **Result.** 26.5% of the covered network (~1,567 of 5,911 km) is plausibly beyond road-based camera reach at the primary threshold; the sweep (`data/sensitivity_sweep.csv`, `figures/sensitivity.png`) shows this ranges from 17.8% to 32.9% across the threshold range tested.
 
 ## Pilot 02 — Threshold Affordance Overlay
