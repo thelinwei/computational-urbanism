@@ -1,0 +1,24 @@
+# Core geospatial stack
+geopandas>=1.0
+shapely>=2.0
+pandas>=2.0
+numpy>=1.26
+
+# Network graph construction (Pilot 03)
+networkx>=3.0
+
+# Spatial statistics (Pilot 03: Moran's I, LISA)
+libpysal>=4.9
+esda>=2.5
+mapclassify>=2.6
+
+# OSM data fetching (Pilot 02 affordance points)
+osmnx>=1.9
+
+# Plotting
+matplotlib>=3.8
+
+# Notebook environment + HTML export
+jupyter>=1.0
+nbformat>=5.10
+nbconvert>=7.16
