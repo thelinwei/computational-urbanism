@@ -1,0 +1,3 @@
+variable,W_geo_I,W_geo_p,W_net_I,W_net_p,gap
+dist_to_road_m (continuous),0.884,0.001,0.9278,0.001,0.0438
+svi_visible (binary),0.6376,0.001,0.7871,0.001,0.1495
