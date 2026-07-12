@@ -2,7 +2,7 @@
 
 **A practitioner-researcher portfolio for PhD applications in computational architecture and urban analytics.**
 
-Prepared by **Lin Wei** (United Design Practice, Singapore) as supporting research for PhD applications to the Urban Analytics Lab (NUS Architecture, Dr. Filip Biljecki) and JEDI Lab (NUS Division of Industrial Design, Dr. Janghee Cho).
+Prepared by **Lin Wei** (United Design Practice, Singapore) as supporting research for PhD applications in computational architecture, urban analytics, and regenerative urbanism.
 
 **→ Read the research brief: [index.html](./index.html)** (or via GitHub Pages, once enabled — see below)
 
