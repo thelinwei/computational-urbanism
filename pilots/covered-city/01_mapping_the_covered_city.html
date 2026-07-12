@@ -109,7 +109,7 @@
 
 <div class="opener">
   <div class="kicker">Open-data pilot 01 of 03</div>
-  <div class="credit">Lin Wei · July 2026 · Pilot study for PhD application, Urban Analytics Lab, NUS Architecture</div>
+  <div class="credit">Lin Wei · July 2026 · Pilot study for computational architecture, urban analytics, and regenerative urbanism research</div>
   <h1 class="headline">Mapping the <span class="it">Covered City</span></h1>
   <p class="standfirst">How much of Singapore's walkable public realm is invisible to road-based street-view imagery? A covered footway segment is treated as <b>plausibly visible</b> if it lies within 20 m of a drivable road, and <b>plausibly invisible</b> otherwise — a deliberately crude, transparent, reproducible proxy. The point isn't precision; it's making a data-quality argument <b>with data</b>.</p>
 </div>
@@ -118,7 +118,6 @@
   <p>In the accompanying writing sample (<i>Seeing Thresholds</i>, §1 and §4), the argument is that Singapore's pedestrian realm is genuinely three-dimensional — covered linkways, through-block connections, elevated links — and that road-based street-view imagery (SVI) is structurally blind to much of it. This notebook turns that claim into a number.</p>
   <p>This notebook demonstrates, for the reviewer: open geospatial data acquisition (<code class="mono">osmnx</code>), projection and spatial operations in Singapore's national projected CRS (<code class="mono">geopandas</code>, <code class="mono">shapely</code>), network-adjacent buffer analysis, cartographic output, and an explicit limitations section — including how OSM's own under-tagging of covered walkways is itself an instance of the threshold-space missingness problem it's trying to measure.</p>
 </div>
-
 <div class="secdiv"><span class="secnum">Section 01</span><span class="ln"></span></div>
 <h2>The covered network has no <span class="it">single name</span></h2>
 <p class="sec-intro">OSM has no single "covered linkway" tag; coverage is spread across several tagging practices. Querying the union of the most common ones, and keeping provenance, becomes a finding in itself — the covered pedestrian realm doesn't have a stable identity in the world's largest open geodata project.</p>
@@ -135,7 +134,6 @@
     </tbody>
   </table>
 </div>
-
 <div class="secdiv"><span class="secnum">Section 02</span><span class="ln"></span></div>
 <h2>The visibility proxy, <span class="it">defined</span></h2>
 <p class="sec-intro">A covered segment is <b>plausibly SVI-visible</b> if its distance to the nearest drivable road is ≤ 20 m — roughly the range at which a car-mounted camera might capture a walkway alongside the road, before occlusion is even considered. The proxy deliberately ignores actual SVI coverage of each road, occlusion by buildings and vegetation, camera orientation, walkway elevation, and interior conditions. Every one of these omissions makes the proxy <i>optimistic</i> about visibility — the true invisible share is almost certainly higher than what's computed here. <b>The proxy is a floor, not an estimate.</b></p>
@@ -154,7 +152,6 @@ covered[<span class="st">"svi_visible"</span>] = covered.dist_to_road_m &lt;= SV
   <div class="stat hi"><div class="num">26.5%</div><div class="cap">plausibly SVI-invisible (1,567 km)</div></div>
   <div class="stat"><div class="num">17%</div><div class="cap">invisible share within 200 m of an MRT/LRT entrance</div></div>
 </div>
-
 <figure>
   <img src="figures/island_covered_visibility.png" alt="Singapore's covered pedestrian realm vs road-based SVI visibility, island-wide map">
   <figcaption><b>Fig. 1 — Singapore's covered pedestrian realm vs. road-based SVI visibility (proxy).</b> Teal = plausibly visible from a drivable road; amber = plausibly invisible. The amber is the part of everyday pedestrian Singapore that a road-based SVI dataset does not see.</figcaption>
@@ -178,7 +175,6 @@ covered[<span class="st">"svi_visible"</span>] = covered.dist_to_road_m &lt;= SV
 <div class="pull">
   <q>It is not simply that road-based street-view imagery misses part of the covered network. The question that follows — whether it misses the parts that matter — is Pilot 02's.</q>
 </div>
-
 <div class="secdiv"><span class="secnum">Historical note</span><span class="ln"></span></div>
 <h2>The <span class="it">five-foot way</span></h2>
 <p class="sec-intro">Worth flagging, though not overclaiming: Singapore's covered pedestrian tradition has a genuine 200-year lineage. Raffles' 1822 Town Plan mandated shophouses provide a covered arcade — the five-foot way — used historically for exactly the behaviours this project studies: resting, hawking, informal commerce, waiting. Five-foot way construction stopped when shophouse-building largely ended in the 1960s, so surviving shophouse stock is a small fraction of the 5,911 km measured here; the modern total is dominated by contemporary HDB/LTA sheltered-walkway infrastructure. Read as historical precedent and conceptual lineage for "threshold affordance," not as an explanation for the present-day figure.</p>
@@ -192,7 +188,7 @@ covered[<span class="st">"svi_visible"</span>] = covered.dist_to_road_m &lt;= SV
     <li><b>Elevation is flattened.</b> Elevated links and basement concourses near roads are wrongly counted as "visible"; the true invisible share is higher. A 3D treatment — thresholds as volumes in a city model — is precisely the PhD-scale extension this pilot motivates.</li>
   </ol>
 </div>
-<div class="side-note"><p>Related UAL work: coverage-and-bias research on street view imagery motivates the visibility question directly; SVI-analysis toolkits and global streetscape datasets motivate why SVI matters in the first place; network-contextual urban analysis frameworks motivate the network-adjacent framing this pilot gestures toward.</p></div>
+<div class="side-note"><p>Related literature: coverage-and-bias research on street view imagery motivates the visibility question directly; SVI-analysis toolkits and global streetscape datasets motivate why SVI matters in the first place; network-contextual urban analysis frameworks motivate the network-adjacent framing this pilot gestures toward.</p></div>
 
 <div class="downloads">
   <div class="downloads-inner">
